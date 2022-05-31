@@ -43,65 +43,16 @@ public class MainFormController {
     /**
      * Initializes the controller class.
      */
-    public void initialize(URL url, ResourceBundle rb) {
+
+    public void initialize(){
         FadeTransition fadeIn = new FadeTransition(Duration.millis(2000), root);
         fadeIn.setFromValue(0.0);
         fadeIn.setToValue(1.0);
         fadeIn.play();
     }
 
-    @FXML
-    private void playMouseExitAnimation(MouseEvent event) {
-        if (event.getSource() instanceof ImageView) {
-            ImageView icon = (ImageView) event.getSource();
-            ScaleTransition scaleT = new ScaleTransition(Duration.millis(200), icon);
-            scaleT.setToX(1);
-            scaleT.setToY(1);
-            scaleT.play();
 
-            icon.setEffect(null);
-            lblMenu.setText("Welcome");
-            lblDescription.setText("Please select one of above main operations to proceed");
-        }
-    }
 
-    @FXML
-    private void playMouseEnterAnimation(MouseEvent event) {
-        if (event.getSource() instanceof ImageView) {
-            ImageView icon = (ImageView) event.getSource();
-
-            switch (icon.getId()) {
-                case "imgCustomer":
-                    lblMenu.setText("Manage Customers");
-                    lblDescription.setText("Click to add, edit, delete, search or view customers");
-                    break;
-                case "imgItem":
-                    lblMenu.setText("Manage Items");
-                    lblDescription.setText("Click to add, edit, delete, search or view items");
-                    break;
-                case "imgOrder":
-                    lblMenu.setText("Place Orders");
-                    lblDescription.setText("Click here if you want to place a new order");
-                    break;
-                case "imgViewOrders":
-                    lblMenu.setText("Search Orders");
-                    lblDescription.setText("Click if you want to search orders");
-                    break;
-            }
-
-            ScaleTransition scaleT = new ScaleTransition(Duration.millis(200), icon);
-            scaleT.setToX(1.2);
-            scaleT.setToY(1.2);
-            scaleT.play();
-
-            DropShadow glow = new DropShadow();
-            glow.setColor(Color.CORNFLOWERBLUE);
-            glow.setWidth(20);
-            glow.setHeight(20);
-            glow.setRadius(20);
-            icon.setEffect(glow);
-        }
-    }
 
 
     @FXML
