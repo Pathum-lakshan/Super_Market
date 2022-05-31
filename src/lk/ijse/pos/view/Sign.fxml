@@ -36,7 +36,7 @@
             <Font name="System Bold" size="28.0" />
          </font>
       </Label>
-      <Label layoutX="500.0" layoutY="400.0" text="Devoloped By ALE IS TER" textFill="#ffffffbf">
+      <Label layoutX="500.0" layoutY="400.0" text="Developed By ALE IS TER" textFill="#ffffffbf">
          <font>
             <Font size="10.0" />
          </font></Label>
@@ -52,7 +52,7 @@
             <Image url="@asserts/images/outline_account_circle_white_48dp.png" />
          </image>
       </ImageView>
-        <JFXTextField fx:id="txtusername" focusColor="WHITE" labelFloat="true" layoutX="74.0" layoutY="198.0" onKeyReleased="#userNameOnKeyRelease" opacity="0.7" prefHeight="40.0" prefWidth="309.0" promptText="USER NAME" style="-fx-prompt-text-fill: white; -fx-text-fill: white; -fx-text-Style: Serif;" unFocusColor="#000000bf">
+        <JFXTextField fx:id="txtUsername" focusColor="WHITE" labelFloat="true" layoutX="74.0" layoutY="198.0" onKeyReleased="#userNameOnKeyRelease" opacity="0.7" prefHeight="40.0" prefWidth="309.0" promptText="USER NAME" style="-fx-prompt-text-fill: white; -fx-text-fill: white; -fx-text-Style: Serif;" unFocusColor="#000000bf">
             <font>
                 <Font name="System Bold Italic" size="13.0" />
             </font>
@@ -62,7 +62,7 @@
                 <Font name="System Bold Italic" size="13.0" />
             </font>
         </JFXTextField>
-        <JFXPasswordField fx:id="txtpasswordfield" focusColor="WHITE" labelFloat="true" layoutX="74.0" layoutY="290.0" onKeyReleased="#passwordOnKeyRelease" opacity="0.56" prefHeight="40.0" prefWidth="309.0" promptText="PASSWORD" style="-fx-prompt-text-fill: white; -fx-text-fill: White;" unFocusColor="#000000bf">
+        <JFXPasswordField fx:id="txtPasswordField" focusColor="WHITE" labelFloat="true" layoutX="74.0" layoutY="290.0" onKeyReleased="#passwordOnKeyRelease" opacity="0.56" prefHeight="40.0" prefWidth="309.0" promptText="PASSWORD" style="-fx-prompt-text-fill: white; -fx-text-fill: White;" unFocusColor="#000000bf">
             <font>
                 <Font name="System Bold Italic" size="13.0" />
             </font>
@@ -82,12 +82,12 @@
                 <Image url="@asserts/images/outline_visibility_white_24dp.png" />
             </image>
         </ImageView>
-        <ImageView fx:id="visioff" fitHeight="25.0" fitWidth="25.0" layoutX="352.0" layoutY="305.0" opacity="0.56" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="visionOff" fitHeight="25.0" fitWidth="25.0" layoutX="352.0" layoutY="305.0" opacity="0.56" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@asserts/images/outline_visibility_off_white_24dp.png" />
             </image>
         </ImageView>
-        <JFXButton layoutX="344.0" layoutY="297.0" onMouseEntered="#entermouseOnaction" onMouseExited="#exitemouseonaction" opacity="0.7" prefHeight="40.0" prefWidth="40.0" text=" " />
+        <JFXButton layoutX="344.0" layoutY="297.0" onMouseEntered="#enterMouseOnAction" onMouseExited="#exitMouseOnAction" opacity="0.7" prefHeight="40.0" prefWidth="40.0" text=" " />
         <JFXButton fx:id="btnSignIn" layoutX="297.0" layoutY="347.0" onAction="#signInOnAction" text="Sign In" textFill="#ffffff99">
             <font>
                 <Font name="System Bold" size="20.0" />
