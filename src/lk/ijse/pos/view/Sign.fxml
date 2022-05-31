@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.Light.Distant?>
 <?import javafx.scene.effect.Lighting?>
@@ -7,11 +11,13 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="443.0" prefWidth="753.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.pos.controller.SignController">
+<AnchorPane prefHeight="425.0" prefWidth="753.0" stylesheets="@asserts/styles/Table.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.pos.controller.SignController">
     <children>
-        <ImageView fitHeight="443.0" fitWidth="753.0" pickOnBounds="true">
+        <ImageView fitHeight="426.0" fitWidth="753.0" pickOnBounds="true">
             <image>
                 <Image url="@asserts/images/woman-with-surgical-mask-is-going-buy-apples.jpg" />
             </image>
@@ -25,19 +31,67 @@
                </light>
             </Lighting>
          </effect></ImageView>
-      <Label layoutX="477.0" layoutY="23.0" opacity="0.55" text="SUPER MARKET" textFill="WHITE">
+      <Label layoutX="41.0" layoutY="30.0" opacity="0.55" text="SUPER MARKET SYSTEM" textFill="WHITE">
          <font>
             <Font name="System Bold" size="28.0" />
          </font>
       </Label>
-        <AnchorPane fx:id="signInContex" layoutX="16.0" layoutY="23.0" prefHeight="397.0" prefWidth="442.0" />
-      <Label layoutX="14.0" layoutY="421.0" text="Devoloped By ALE IS TER" textFill="#ffffffbf">
+      <Label layoutX="500.0" layoutY="400.0" text="Devoloped By ALE IS TER" textFill="#ffffffbf">
          <font>
             <Font size="10.0" />
          </font></Label>
-      <Label layoutX="182.0" layoutY="421.0" text="version 1.0.3" textFill="#ffffffbf">
+      <Label layoutX="668.0" layoutY="400.0" text="version 1.0.3" textFill="#ffffffbf">
          <font>
             <Font size="10.0" />
          </font></Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="55.0" layoutX="27.0" layoutY="105.0" stroke="WHITE" strokeType="INSIDE" width="350.0" />
+      <JFXComboBox focusColor="WHITE" labelFloat="true" layoutX="33.0" layoutY="113.0" prefHeight="40.0" prefWidth="278.0" style="-fx-prompt-text-fill: WHITE;" unFocusColor="BLACK" />
+      <Line endX="-46.0" layoutX="368.0" layoutY="112.0" startX="-46.0" startY="42.0" stroke="WHITE" />
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="324.0" layoutY="108.0" opacity="0.65" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@asserts/images/outline_account_circle_white_48dp.png" />
+         </image>
+      </ImageView>
+        <JFXTextField fx:id="txtusername" focusColor="WHITE" labelFloat="true" layoutX="74.0" layoutY="198.0" onKeyReleased="#userNameOnKeyRelease" opacity="0.7" prefHeight="40.0" prefWidth="309.0" promptText="USER NAME" style="-fx-prompt-text-fill: white; -fx-text-fill: white; -fx-text-Style: Serif;" unFocusColor="#000000bf">
+            <font>
+                <Font name="System Bold Italic" size="13.0" />
+            </font>
+        </JFXTextField>
+        <JFXTextField fx:id="txtPassword" focusColor="WHITE" labelFloat="true" layoutX="74.0" layoutY="290.0" opacity="0.56" prefHeight="40.0" prefWidth="309.0" promptText="PASSWORD" style="-fx-prompt-text-fill: white; -fx-text-fill: White; -fx-text-Style: Serif;" unFocusColor="#000000bf">
+            <font>
+                <Font name="System Bold Italic" size="13.0" />
+            </font>
+        </JFXTextField>
+        <JFXPasswordField fx:id="txtpasswordfield" focusColor="WHITE" labelFloat="true" layoutX="74.0" layoutY="290.0" onKeyReleased="#passwordOnKeyRelease" opacity="0.56" prefHeight="40.0" prefWidth="309.0" promptText="PASSWORD" style="-fx-prompt-text-fill: white; -fx-text-fill: White;" unFocusColor="#000000bf">
+            <font>
+                <Font name="System Bold Italic" size="13.0" />
+            </font>
+        </JFXPasswordField>
+        <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="29.0" layoutY="190.0" opacity="0.7" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@asserts/images/outline_person_white_48dp.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="29.0" layoutY="284.0" opacity="0.7" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@asserts/images/outline_password_white_48dp.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="vision" fitHeight="25.0" fitWidth="25.0" layoutX="352.0" layoutY="305.0" opacity="0.56" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@asserts/images/outline_visibility_white_24dp.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="visioff" fitHeight="25.0" fitWidth="25.0" layoutX="352.0" layoutY="305.0" opacity="0.56" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@asserts/images/outline_visibility_off_white_24dp.png" />
+            </image>
+        </ImageView>
+        <JFXButton layoutX="344.0" layoutY="297.0" onMouseEntered="#entermouseOnaction" onMouseExited="#exitemouseonaction" opacity="0.7" prefHeight="40.0" prefWidth="40.0" text=" " />
+        <JFXButton fx:id="btnSignIn" layoutX="297.0" layoutY="347.0" onAction="#signInOnAction" text="Sign In" textFill="#ffffff99">
+            <font>
+                <Font name="System Bold" size="20.0" />
+            </font>
+        </JFXButton>
     </children>
 </AnchorPane>
