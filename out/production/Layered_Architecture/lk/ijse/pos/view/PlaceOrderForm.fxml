@@ -40,17 +40,17 @@
             <TableColumn fx:id="colDelete" prefWidth="112.0" text="Delete" />
         </columns>
       </TableView>
-      <JFXTextField fx:id="txtItemName" editable="false" focusColor="WHITE" labelFloat="true" layoutX="79.0" layoutY="604.0" onKeyReleased="#txtSupplyItemNameOnKeyRelease" opacity="0.65" prefHeight="50.0" prefWidth="369.0" promptText="Item Name" style="-fx-prompt-text-fill: white;" unFocusColor="BLACK">
+      <JFXTextField fx:id="txtItemName" focusColor="WHITE" labelFloat="true" layoutX="79.0" layoutY="604.0" onKeyReleased="#txtSupplyItemNameOnKeyRelease" opacity="0.65" prefHeight="50.0" prefWidth="369.0" promptText="Item Name" style="-fx-prompt-text-fill: white;" unFocusColor="BLACK">
          <font>
             <Font size="16.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="txtItemUnitPrice" editable="false" focusColor="WHITE" labelFloat="true" layoutX="79.0" layoutY="814.0" onKeyReleased="#txtSupplyItemQtyOnAction" opacity="0.65" prefHeight="50.0" prefWidth="369.0" promptText="Item Unit Price " style="-fx-prompt-text-fill: white;" unFocusColor="BLACK">
+      <JFXTextField fx:id="txtItemUnitPrice" focusColor="WHITE" labelFloat="true" layoutX="79.0" layoutY="814.0" onKeyReleased="#txtSupplyItemQtyOnAction" opacity="0.65" prefHeight="50.0" prefWidth="369.0" promptText="Item Unit Price " style="-fx-prompt-text-fill: white;" unFocusColor="BLACK">
          <font>
             <Font size="16.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="txtItemQty" editable="false" focusColor="WHITE" labelFloat="true" layoutX="79.0" layoutY="919.0" onKeyReleased="#txtSupplyCostOnAction" opacity="0.65" prefHeight="50.0" prefWidth="369.0" promptText="Item Qty" style="-fx-prompt-text-fill: white;" unFocusColor="BLACK">
+      <JFXTextField fx:id="txtItemQty" focusColor="WHITE" labelFloat="true" layoutX="79.0" layoutY="919.0" onKeyReleased="#txtSupplyCostOnAction" opacity="0.65" prefHeight="50.0" prefWidth="369.0" promptText="Item Qty" style="-fx-prompt-text-fill: white;" unFocusColor="BLACK">
          <font>
             <Font size="16.0" />
          </font>
@@ -61,7 +61,7 @@
             <Font size="16.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="TxtItemDescription" editable="false" focusColor="WHITE" labelFloat="true" layoutX="79.0" layoutY="709.0" onKeyReleased="#txtSupplyItemNameOnKeyRelease" opacity="0.65" prefHeight="50.0" prefWidth="369.0" promptText="Item Description" style="-fx-prompt-text-fill: white;" unFocusColor="BLACK">
+      <JFXTextField fx:id="TxtItemDescription" focusColor="WHITE" labelFloat="true" layoutX="79.0" layoutY="709.0" onKeyReleased="#txtSupplyItemNameOnKeyRelease" opacity="0.65" prefHeight="50.0" prefWidth="369.0" promptText="Item Description" style="-fx-prompt-text-fill: white;" unFocusColor="BLACK">
          <font>
             <Font size="16.0" />
          </font>

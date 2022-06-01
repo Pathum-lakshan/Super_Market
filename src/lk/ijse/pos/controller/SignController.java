@@ -12,9 +12,15 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class SignController {
     public JFXTextField txtUsername;
@@ -23,6 +29,8 @@ public class SignController {
     public ImageView vision;
     public ImageView visionOff;
     public JFXButton btnSignIn;
+
+    public AnchorPane signInContext;
 
     public void initialize(){
         visionOff.setVisible(false);
@@ -36,7 +44,10 @@ public class SignController {
     }
 
 
-    public void signInOnAction(ActionEvent actionEvent) {
+    public void signInOnAction(ActionEvent actionEvent) throws IOException {
+        Stage stage=(Stage) signInContext.getScene().getWindow();
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/DashBoardCashierForm.fxml"))));
+        stage.centerOnScreen();
     }
 
 
