@@ -299,9 +299,30 @@ public class PlaceOrdersFormController {
 
     }
 
-    public void btnPlaceOrderOnAction(ActionEvent actionEvent) {
+    public void btnPlaceOrderOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        OrdersTM orderDetailTM = tblOrder.getItems().stream().filter(detail -> detail.getCustomerName().equals(detail.getCustomerName())).findFirst().get();
+        boolean b =    placeOrderBO.placeOrder(new OrderDTO(orderId,LocalDate.now(),orderDetailTM.getCustomerName(),Double.parseDouble(orderDetailTM.getTotal()) ));
+        if (b) {
+            new Alert(Alert.AlertType.INFORMATION, "Order has been placed successfully").show();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Order has not been placed successfully").show();
+        }
 
-
+        orderId = placeOrderBO.generateNewOrderId();
+        lblOrderID.setText(orderId);
+        cmbCustomerID.getSelectionModel().clearSelection();
+        cmbItemCode.getSelectionModel().clearSelection();
+        tblOrder.getItems().clear();
+        txtItemUnitPrice.clear();
+        txtItemQty.clear();
+        txtItemName.clear();
+        txtCustomerPhone.clear();
+        TxtItemDescription.clear();
+        txtCustomerAddress.clear();
+        cmbItemCode.setValue(null);
+        cmbCustomerID.setValue(null);
+        txtCustomerName.clear();
+        txtQtyOnHand.clear();
 
 
         calculateTotal();
@@ -319,5 +340,6 @@ public class PlaceOrdersFormController {
         }
         lblTotal.setText(String.valueOf(total));
     }
+
 
 }

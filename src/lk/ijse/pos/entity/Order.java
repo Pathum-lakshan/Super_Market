@@ -13,41 +13,17 @@ import java.time.LocalDate;
 public class Order {
     private String oid;
     private LocalDate date;
-    private String customerID;
-    private String ItemCode;
-    private String qtyOnHand;
+    private String cusName;
+    private double total;
+
+    public Order(String oid, LocalDate date, String cusName, double total) {
+        this.oid = oid;
+        this.date = date;
+        this.cusName = cusName;
+        this.total = total;
+    }
 
     public Order() {
-    }
-
-    public Order(String oid, LocalDate date, String customerID, String itemCode, String qtyOnHand) {
-        this.oid = oid;
-        this.date = date;
-        this.customerID = customerID;
-        ItemCode = itemCode;
-        this.qtyOnHand = qtyOnHand;
-    }
-
-    public Order(String oid, LocalDate date, String customerID) {
-        this.oid = oid;
-        this.date = date;
-        this.customerID = customerID;
-    }
-
-    public String getItemCode() {
-        return ItemCode;
-    }
-
-    public void setItemCode(String itemCode) {
-        ItemCode = itemCode;
-    }
-
-    public String getQtyOnHand() {
-        return qtyOnHand;
-    }
-
-    public void setQtyOnHand(String qtyOnHand) {
-        this.qtyOnHand = qtyOnHand;
     }
 
     public String getOid() {
@@ -66,12 +42,20 @@ public class Order {
         this.date = date;
     }
 
-    public String getCustomerID() {
-        return customerID;
+    public String getCusName() {
+        return cusName;
     }
 
-    public void setCustomerID(String customerID) {
-        this.customerID = customerID;
+    public void setCusName(String cusName) {
+        this.cusName = cusName;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
     }
 
     @Override
@@ -79,7 +63,8 @@ public class Order {
         return "Order{" +
                 "oid='" + oid + '\'' +
                 ", date=" + date +
-                ", customerID='" + customerID + '\'' +
+                ", cusName='" + cusName + '\'' +
+                ", total=" + total +
                 '}';
     }
 }

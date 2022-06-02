@@ -8,42 +8,17 @@ import java.util.List;
 public class OrderDTO  {
     private String orderId;
     private LocalDate orderDate;
-    private String customerId;
-    private String customerName;
-    private List<OrderDetailDTO> orderDetails;
-
-    public OrderDTO(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) {
-        this.orderId = orderId;
-        this.orderDate = orderDate;
-        this.customerId = customerId;
-        this.orderDetails = orderDetails;
-    }
-
-    public List<OrderDetailDTO> getOrderDetails() {
-        return orderDetails;
-    }
-
-    public void setOrderDetails(List<OrderDetailDTO> orderDetails) {
-        this.orderDetails = orderDetails;
-    }
-
-    private BigDecimal orderTotal;
+    private String cusName;
+    private double total;
 
     public OrderDTO() {
     }
 
-    public OrderDTO(String orderId, LocalDate orderDate, String customerId) {
+    public OrderDTO(String orderId, LocalDate orderDate, String cusName, double total) {
         this.orderId = orderId;
         this.orderDate = orderDate;
-        this.customerId = customerId;
-    }
-
-    public OrderDTO(String orderId, LocalDate orderDate, String customerId, String customerName, BigDecimal orderTotal) {
-        this.orderId = orderId;
-        this.orderDate = orderDate;
-        this.customerId = customerId;
-        this.customerName = customerName;
-        this.orderTotal = orderTotal;
+        this.cusName = cusName;
+        this.total = total;
     }
 
     public String getOrderId() {
@@ -62,28 +37,20 @@ public class OrderDTO  {
         this.orderDate = orderDate;
     }
 
-    public String getCustomerId() {
-        return customerId;
+    public String getCusName() {
+        return cusName;
     }
 
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
+    public void setCusName(String cusName) {
+        this.cusName = cusName;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public double getTotal() {
+        return total;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
-    public BigDecimal getOrderTotal() {
-        return orderTotal;
-    }
-
-    public void setOrderTotal(BigDecimal orderTotal) {
-        this.orderTotal = orderTotal;
+    public void setTotal(double total) {
+        this.total = total;
     }
 
     @Override
@@ -91,10 +58,8 @@ public class OrderDTO  {
         return "OrderDTO{" +
                 "orderId='" + orderId + '\'' +
                 ", orderDate=" + orderDate +
-                ", customerId='" + customerId + '\'' +
-                ", customerName='" + customerName + '\'' +
-                ", orderDetails=" + orderDetails +
-                ", orderTotal=" + orderTotal +
+                ", cusName='" + cusName + '\'' +
+                ", total=" + total +
                 '}';
     }
 }
