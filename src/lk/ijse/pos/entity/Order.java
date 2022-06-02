@@ -14,14 +14,40 @@ public class Order {
     private String oid;
     private LocalDate date;
     private String customerID;
+    private String ItemCode;
+    private String qtyOnHand;
 
     public Order() {
+    }
+
+    public Order(String oid, LocalDate date, String customerID, String itemCode, String qtyOnHand) {
+        this.oid = oid;
+        this.date = date;
+        this.customerID = customerID;
+        ItemCode = itemCode;
+        this.qtyOnHand = qtyOnHand;
     }
 
     public Order(String oid, LocalDate date, String customerID) {
         this.oid = oid;
         this.date = date;
         this.customerID = customerID;
+    }
+
+    public String getItemCode() {
+        return ItemCode;
+    }
+
+    public void setItemCode(String itemCode) {
+        ItemCode = itemCode;
+    }
+
+    public String getQtyOnHand() {
+        return qtyOnHand;
+    }
+
+    public void setQtyOnHand(String qtyOnHand) {
+        this.qtyOnHand = qtyOnHand;
     }
 
     public String getOid() {

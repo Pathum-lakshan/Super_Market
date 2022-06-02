@@ -1,9 +1,6 @@
 package lk.ijse.pos.view.tdm;
 
-/**
- * @author : Sanu Vithanage
- * @since : 0.1.0
- **/
+
 
 public class CustomerTM implements Comparable<CustomerTM> {
     private String id;

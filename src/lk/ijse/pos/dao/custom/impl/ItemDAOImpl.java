@@ -15,7 +15,7 @@ public class ItemDAOImpl implements ItemDAO {
         ResultSet rst = SQLUtil.executeQuery("SELECT * FROM Item");
         ArrayList<Item> allItems = new ArrayList<>();
         while (rst.next()) {
-            allItems.add(new Item(rst.getString(1), rst.getString(2), rst.getInt(3), rst.getBigDecimal(4)));
+            allItems.add(new Item(rst.getString(1), rst.getString(2), rst.getString(3), rst.getBigDecimal(4),rst.getInt(5)));
         }
         return allItems;
     }
@@ -32,9 +32,9 @@ public class ItemDAOImpl implements ItemDAO {
 
     @Override
     public Item search(String s) throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.executeQuery("SELECT * FROM Item WHERE code=?", s);
+        ResultSet rst = SQLUtil.executeQuery("SELECT * FROM Item WHERE ItemCode=?", s);
         if (rst.next()) {
-            return new Item(rst.getString(1), rst.getString(2), rst.getInt(3), rst.getBigDecimal(4));
+            return new Item(rst.getString(1), rst.getString(2), rst.getString(3), rst.getBigDecimal(4),rst.getInt(5));
         }
         return null;
     }

@@ -35,6 +35,12 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
     private final OrderDetailsDAO orderDetailsDAO = (OrderDetailsDAO) daoFactory.getDAO(DAOFactory.DAOTypes.ORDERDETAILS);
     private final QueryDAO queryDAO = (QueryDAO) daoFactory.getDAO(DAOFactory.DAOTypes.QUERYDAO);
 
+
+
+
+
+
+
     public boolean placeOrder(OrderDTO orderDTO) throws SQLException, ClassNotFoundException {
         /*Transaction*/
 
@@ -85,12 +91,12 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
 
     public CustomerDTO searchCustomer(String id) throws SQLException, ClassNotFoundException {
         Customer search = customerDAO.search(id);
-        return new CustomerDTO(search.getId(),search.getName(),search.getAddress());
+        return new CustomerDTO(search.getId(),search.getName(),search.getAddress(),search.getPhone());
     }
 
     public ItemDTO searchItem(String code) throws SQLException, ClassNotFoundException {
         Item search = itemDAO.search(code);
-        return new ItemDTO(search.getCode(),search.getDescription(),search.getUnitPrice(),search.getQtyOnHand());
+        return new ItemDTO(search.getCode(),search.getDescription(),search.getUnitPrice(),search.getQtyOnHand(),search.getName());
     }
 
     public boolean existItem(String code) throws SQLException, ClassNotFoundException {
@@ -134,6 +140,12 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
         }
 
         return allItem;
+    }
+
+    @Override
+    public boolean UpdateItemQty(ItemDTO itemDTO) throws SQLException, ClassNotFoundException {
+     return queryDAO.updateItem(itemDTO.getCode(),itemDTO.getQtyOnHand());
+
     }
 }
 

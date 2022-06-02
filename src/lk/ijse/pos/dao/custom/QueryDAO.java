@@ -16,4 +16,5 @@ import java.util.ArrayList;
 
 public interface QueryDAO extends SuperDAO {
     ArrayList<CustomDTO> searchOrderByOrderID(String id)throws SQLException,ClassNotFoundException;
+     boolean updateItem (String code, int qty) throws SQLException, ClassNotFoundException;
 }

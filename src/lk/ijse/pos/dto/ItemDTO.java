@@ -10,6 +10,28 @@ public class ItemDTO implements Serializable {
     private String description;
     private BigDecimal unitPrice;
     private int qtyOnHand;
+    private String ItemName;
+
+    public ItemDTO(String code, String description, BigDecimal unitPrice, int qtyOnHand, String itemName) {
+        this.code = code;
+        this.description = description;
+        this.unitPrice = unitPrice;
+        this.qtyOnHand = qtyOnHand;
+        ItemName = itemName;
+    }
+
+    public ItemDTO(String code, int qty) {
+        this.code = code;
+        this.qtyOnHand = qty;
+    }
+
+    public String getItemName() {
+        return ItemName;
+    }
+
+    public void setItemName(String itemName) {
+        ItemName = itemName;
+    }
 
     public ItemDTO() {
     }
@@ -55,11 +77,12 @@ public class ItemDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "ItemTM{" +
+        return "ItemDTO{" +
                 "code='" + code + '\'' +
                 ", description='" + description + '\'' +
                 ", unitPrice=" + unitPrice +
                 ", qtyOnHand=" + qtyOnHand +
+                ", ItemName='" + ItemName + '\'' +
                 '}';
     }
 }

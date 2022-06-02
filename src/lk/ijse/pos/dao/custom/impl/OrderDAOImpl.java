@@ -42,7 +42,7 @@ public class OrderDAOImpl implements OrderDao {
 
     @Override
     public String generateNewID() throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.executeQuery("SELECT oid FROM `Orders` ORDER BY oid DESC LIMIT 1;");
+        ResultSet rst = SQLUtil.executeQuery("SELECT OrderId FROM `Orders` ORDER BY OrderId DESC LIMIT 1;");
         return rst.next() ? String.format("OID-%03d", (Integer.parseInt(rst.getString("oid").replace("OID-", "")) + 1)) : "OID-001";
     }
 }

@@ -28,5 +28,10 @@ public class QueryDAOImpl implements QueryDAO {
         return orderRecords;
     }
 
+    public boolean updateItem (String code, int qty) throws SQLException, ClassNotFoundException {
+
+     return    SQLUtil.execute("UPDATE item set Qty=? where ItemCode=?",qty,code);
+    }
+
 
 }

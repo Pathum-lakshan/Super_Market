@@ -111,7 +111,7 @@ public class PlaceOrderFormController {
                         }
 
 
-                        PlaceOrderBOImpl placeOrderBO = new PlaceOrderBOImpl();
+
 
                         CustomerDTO search = placeOrderBO.searchCustomer(newValue + "");
 
