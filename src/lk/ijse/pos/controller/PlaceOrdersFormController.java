@@ -69,6 +69,7 @@ public class PlaceOrdersFormController {
 
     public Label lblOrderID;
     public TableColumn colItemUnitPrice;
+    public JFXButton btnAdd;
 
     private String orderId;
 
@@ -92,6 +93,7 @@ public class PlaceOrdersFormController {
       cmbCustomerID.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
           if (newValue != null) {
               try {
+
                   CustomerDTO search = placeOrderBO.searchCustomer(newValue + "");
                   txtCustomerName.setText(search.getName());
                   txtCustomerAddress.setText(search.getAddress());
@@ -120,6 +122,22 @@ public class PlaceOrdersFormController {
           }
       });
 
+      tblOrder.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, selectedOrderDetail) -> {
+
+          if (selectedOrderDetail != null) {
+              cmbItemCode.setDisable(true);
+              cmbItemCode.setValue(selectedOrderDetail.getItemCode());
+              btnAdd.setText("Update");
+              txtQtyOnHand.setText(txtQtyOnHand.getText() + selectedOrderDetail.getQtyOnHand() + "");
+              txtQtyOnHand.setText(selectedOrderDetail.getQtyOnHand() + "");
+          } else {
+              btnAdd.setText("Add");
+              cmbItemCode.setDisable(false);
+              cmbItemCode.getSelectionModel().clearSelection();
+              txtQtyOnHand.clear();
+          }
+
+      });
 
       loadAllCustomerIds();
       loadAllItemCodes();
@@ -142,16 +160,32 @@ public class PlaceOrdersFormController {
         return placeOrderBO.generateNewOrderId();
     }
 
-    public void DeleteOnAction(ActionEvent actionEvent) {
+    public void DeleteOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 
       OrdersTM selectItem = tblOrder.getSelectionModel().getSelectedItem();
 
       tblOrder.getItems().removeAll(selectItem);
 
-      String code = placeOrderBO.searchItem(selectItem.)
+        ItemDTO itemDTO = placeOrderBO.searchItem(selectItem.getItemCode());
 
+        int qty = itemDTO.getQtyOnHand();
 
+        int now = Integer.parseInt(selectItem.getQtyOnHand());
 
+        int updatedQty= now + qty;
+
+        placeOrderBO.UpdateItemQty(new ItemDTO(selectItem.getItemCode(),updatedQty));
+
+        txtItemUnitPrice.clear();
+        txtItemQty.clear();
+        txtItemName.clear();
+        txtCustomerPhone.clear();
+        TxtItemDescription.clear();
+        txtCustomerAddress.clear();
+        cmbItemCode.setValue(null);
+        cmbCustomerID.setValue(null);
+        txtCustomerName.clear();
+        txtQtyOnHand.clear();
 
     }
 
@@ -199,20 +233,42 @@ public class PlaceOrdersFormController {
 
                       String totalOfQtyOnHand= String.valueOf(qtyOnHand*unitPrice);
 
-                      obTmList.add(new OrdersTM(txtCustomerName.getText(),txtItemName.getText(),txtItemUnitPrice.getText(),txtQtyOnHand.getText(),totalOfQtyOnHand));
+                      String itemCode= String.valueOf(cmbItemCode.getValue());
+                      String qty = txtQtyOnHand.getText();
+                      BigDecimal unitsPrice = new BigDecimal(txtItemUnitPrice.getText()).setScale(2);
+                      String total = String.valueOf(unitsPrice.multiply(new BigDecimal(qty)).setScale(2));
+                      boolean exists = tblOrder.getItems().stream().anyMatch(detail -> detail.getItemCode().equals(itemCode));
 
 
 
+                      if (exists) {
+                          OrdersTM orderDetailTM = tblOrder.getItems().stream().filter(detail -> detail.getItemCode().equals(itemCode)).findFirst().get();
+
+                          if (btnAdd.getText().equalsIgnoreCase("Update")) {
+                              orderDetailTM.setQtyOnHand(qty);
+                              orderDetailTM.setTotal(total);
+                              tblOrder.getSelectionModel().clearSelection();
+                          } else {
+                              int x= Integer.parseInt(orderDetailTM.getQtyOnHand());
+                              int y = Integer.parseInt(qty);
+
+                              String a = String.valueOf(x+y);
+
+                              orderDetailTM.setQtyOnHand(a);
+                            String  totals = String.valueOf(new BigDecimal(orderDetailTM.getQtyOnHand()).multiply(unitsPrice).setScale(2));
+                              orderDetailTM.setTotal(totals);
+                          }
+                          tblOrder.refresh();
+                      } else {
+                          tblOrder.getItems().add(new OrdersTM(txtCustomerName.getText(),txtItemName.getText(),txtItemUnitPrice.getText(),txtQtyOnHand.getText(),totalOfQtyOnHand,(String) cmbItemCode.getValue()));
+                      }
+
+                      int qty1 = itemQty-qtyOnHand;
+
+                      placeOrderBO.UpdateItemQty(new ItemDTO((String) cmbItemCode.getValue(),qty1));
 
 
-
-
-                      int qty = itemQty-qtyOnHand;
-
-                      placeOrderBO.UpdateItemQty(new ItemDTO((String) cmbItemCode.getValue(),qty));
-
-
-                      tblOrder.setItems(obTmList);
+                     // tblOrder.setItems(obTmList);
                       txtItemUnitPrice.clear();
                       txtItemQty.clear();
                       txtItemName.clear();
@@ -239,9 +295,29 @@ public class PlaceOrdersFormController {
 
 
 
+      calculateTotal();
 
     }
 
     public void btnPlaceOrderOnAction(ActionEvent actionEvent) {
+
+
+
+
+        calculateTotal();
     }
+    private void calculateTotal() {
+        BigDecimal total = new BigDecimal(0);
+
+        for (OrdersTM detail : tblOrder.getItems()) {
+
+            double x = Double.parseDouble(detail.getTotal());
+
+            BigDecimal y = BigDecimal.valueOf(x);
+
+            total = total.add(y);
+        }
+        lblTotal.setText(String.valueOf(total));
+    }
+
 }

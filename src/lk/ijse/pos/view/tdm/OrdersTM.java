@@ -14,6 +14,24 @@ public class OrdersTM {
     private String unitPrice;
     private String qtyOnHand;
     private String Total;
+    private String itemCode;
+
+    public String getItemCode() {
+        return itemCode;
+    }
+
+    public void setItemCode(String itemCode) {
+        this.itemCode = itemCode;
+    }
+
+    public OrdersTM(String customerName, String itemName, String unitPrice, String qtyOnHand, String total, String itemCode) {
+        this.customerName = customerName;
+        this.itemName = itemName;
+        this.unitPrice = unitPrice;
+        this.qtyOnHand = qtyOnHand;
+        Total = total;
+        this.itemCode = itemCode;
+    }
 
     public OrdersTM(String customerName, String itemName, String unitPrice, String qtyOnHand, String total) {
         this.customerName = customerName;

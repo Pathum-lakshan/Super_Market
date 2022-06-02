@@ -26,7 +26,7 @@
             <Font size="16.0" />
          </font>
       </JFXTextField>
-      <JFXButton layoutX="1075.0" layoutY="61.0" onAction="#btnAddOnAction" opacity="0.65" prefHeight="60.0" prefWidth="278.0" style="-fx-text-opacity: 0.5;" styleClass="menuItem2" stylesheets="@asserts/styles/css.css" text="Add ">
+      <JFXButton fx:id="btnAdd" layoutX="1075.0" layoutY="61.0" onAction="#btnAddOnAction" opacity="0.65" prefHeight="60.0" prefWidth="278.0" style="-fx-text-opacity: 0.5;" styleClass="menuItem2" stylesheets="@asserts/styles/css.css" text="Add ">
          <font>
             <Font name="System Bold" size="28.0" />
          </font>

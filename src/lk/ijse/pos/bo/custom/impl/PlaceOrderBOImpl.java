@@ -147,5 +147,6 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
      return queryDAO.updateItem(itemDTO.getCode(),itemDTO.getQtyOnHand());
 
     }
+
 }
 
