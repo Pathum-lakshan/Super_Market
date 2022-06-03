@@ -150,30 +150,43 @@ public class ManageFormController {
     }
 
     public void txtCustomerNameOnKeyRelease(KeyEvent keyEvent) {
+if (newValue1!=null){checkText(txtCustomerName,newValue1.getName());}
 
+
+    }
+
+    public void txtCustomerNicOnKeyRelease(KeyEvent keyEvent) {
+
+        if (newValue1!=null){checkText(txtCustomerNIC,newValue1.getNic());}
+
+    }
+
+    private void checkText(JFXTextField jfxTextField,String value) {
         if (newValue1==null){
 
             btnAddCustomer.setText("Add Customer");
-        }else if (txtCustomerName.getText().equals(newValue1.getName())){
+        }else if (jfxTextField.getText().equals(value)){
 
             btnAddCustomer.setText("Delete Customer");
         }else {
 
             btnAddCustomer.setText("Update Customer");
         }
-
-    }
-
-    public void txtCustomerNicOnKeyRelease(KeyEvent keyEvent) {
     }
 
     public void txtCustomerPhoneNumberOnKeyRelease(KeyEvent keyEvent) {
+
+        if (newValue1!=null){checkText(txtCustomerPhoneNumber,newValue1.getPhoneNumber());}
+
     }
 
     public void addCustomerOnAction(ActionEvent actionEvent) {
     }
 
     public void txtCustomerAddressOnKeyRelease(KeyEvent keyEvent) {
+        if (newValue1!=null){checkText(txtCustomerAddress,newValue1.getAddress());}
+
+
     }
 
     public void modifyOrderOnAction(ActionEvent actionEvent) {
