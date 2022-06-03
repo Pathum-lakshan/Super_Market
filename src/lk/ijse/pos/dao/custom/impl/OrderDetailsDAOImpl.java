@@ -4,6 +4,7 @@ import lk.ijse.pos.dao.SQLUtil;
 import lk.ijse.pos.dao.custom.OrderDetailsDAO;
 import lk.ijse.pos.entity.OrderDetails;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -40,7 +41,40 @@ public class OrderDetailsDAOImpl implements OrderDetailsDAO {
 
     @Override
     public String generateNewID() throws SQLException, ClassNotFoundException {
-        return null;
+        String table ="ODderDetail";
+        String incrementID=null;
+
+        ResultSet maxId = SQLUtil.execute("SELECT CONCAT(MAX(0+SUBSTRING(OrderId,3))) FROM OrderDetail");
+
+        String id=null;
+
+        while (maxId.next()){
+            id=maxId.getString(1);
+        }
+
+        if (id!=null){
+            int nextID = Integer.parseInt(id);
+            nextID++;
+            String cptl =table.substring(1,2);
+            char v=cptl.charAt(0);
+            char second = Character.toUpperCase(v);
+            String first =table.substring(0,1);
+            incrementID = first+second+nextID;
+
+        }else {
+            String cptl =table.substring(1,2);
+            char v=cptl.charAt(0);
+            char second = Character.toUpperCase(v);
+            String first =table.substring(0,1);
+            incrementID = first+second+"1";
+
+
+        }
+
+
+
+        return incrementID;
+
     }
 
 }

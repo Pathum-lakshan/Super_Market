@@ -143,6 +143,7 @@ public class ManageFormController {
             for (CustomerDTO customer : allCustomers) {
                 tblCustomer.getItems().add(customer);
 
+
             }
 
         } catch (SQLException e) {
@@ -219,19 +220,27 @@ if (newValue1!=null){checkText(txtCustomerName,newValue1.getName());}
         else if (btnAddCustomer.getText().equals("Delete Customer")){
 
             if (manageCustomerBO.deleteCustomer(txtCustomerID.getText())){
-                new Alert(Alert.AlertType.INFORMATION, "Customer has been Deleted successfully").show();
-                Util.notifications("Customer has been saved successfully","SUCCESSFULLY");
+
+                Util.notifications("Customer has been Deleted successfully","SUCCESSFULLY");
                 loadAllCustomer();
             }
         }
         else {
 
             if (manageCustomerBO.UpdateCustomer(new CustomerDTO(txtCustomerID.getText(),txtCustomerName.getText(),txtCustomerAddress.getText(),txtCustomerNIC.getText(),txtCustomerPhoneNumber.getText()))){
-                new Alert(Alert.AlertType.INFORMATION, "Customer has been Updated successfully").show();
+
+                Util.notifications("Customer has been Updated successfully","SUCCESSFULLY");
                 loadAllCustomer();
             }
 
         }
+
+        txtCustomerID.clear();
+        txtCustomerName.clear();
+        txtCustomerAddress.clear();
+        txtCustomerNIC.clear();
+        txtCustomerPhoneNumber.clear();
+        btnAddCustomer.setText("Add Customer");
     }
 
     public void txtCustomerAddressOnKeyRelease(KeyEvent keyEvent) {

@@ -16,6 +16,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         ArrayList<Customer> allCustomers = new ArrayList<>();
         while (rst.next()) {
             allCustomers.add(new Customer(rst.getString(1), rst.getString(2), rst.getString(3),rst.getString(4),rst.getString(5)));
+
         }
         return allCustomers;
     }
@@ -27,7 +28,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public boolean update(Customer entity) throws SQLException, ClassNotFoundException {
-        return SQLUtil.executeUpdate("UPDATE Customer SET name=?, address=? WHERE id=?", entity.getName(), entity.getAddress(), entity.getId());
+        return SQLUtil.executeUpdate("UPDATE Customer SET cusName=?, CusAddress=?,CusNic=?,cusPhone=? WHERE CusId=?", entity.getName(), entity.getAddress(),entity.getNic(),entity.getPhone(), entity.getId());
     }
 
     @Override
@@ -48,19 +49,52 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public boolean delete(String s) throws SQLException, ClassNotFoundException {
-        return SQLUtil.executeUpdate("DELETE FROM Customer WHERE id=?", s);
+        return SQLUtil.executeUpdate("DELETE FROM Customer WHERE CusId=?", s);
     }
 
     @Override
     public String generateNewID() throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.executeQuery("SELECT cusId FROM Customer ORDER BY cusId DESC LIMIT 1;");
+       /* ResultSet rst = SQLUtil.executeQuery("SELECT cusId FROM Customer ORDER BY cusId DESC LIMIT 1;");
         if (rst.next()) {
             String id = rst.getString("cusId");
             int newCustomerId = Integer.parseInt(id.replace("C00-", "")) + 1;
             return String.format("C00-%03d", newCustomerId);
         } else {
             return "C00-001";
+        }*/
+        String table ="Customer";
+        String incrementID=null;
+
+        ResultSet maxId = SQLUtil.execute("SELECT CONCAT(MAX(0+SUBSTRING(cusId,3))) FROM Customer");
+
+        String id=null;
+
+        while (maxId.next()){
+            id=maxId.getString(1);
         }
+
+        if (id!=null){
+            int nextID = Integer.parseInt(id);
+            nextID++;
+            String cptl =table.substring(1,2);
+            char v=cptl.charAt(0);
+            char second = Character.toUpperCase(v);
+            String first =table.substring(0,1);
+            incrementID = first+second+nextID;
+
+        }else {
+            String cptl =table.substring(1,2);
+            char v=cptl.charAt(0);
+            char second = Character.toUpperCase(v);
+            String first =table.substring(0,1);
+            incrementID = first+second+"1";
+
+
+        }
+
+
+
+        return incrementID;
     }
 
 }

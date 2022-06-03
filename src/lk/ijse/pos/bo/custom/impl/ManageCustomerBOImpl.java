@@ -35,11 +35,11 @@ public class ManageCustomerBOImpl implements ManageCustomerBO {
     }
 
     public boolean saveCustomer(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
-       return customerDAO.save(new Customer(customerDTO.getId(), customerDTO.getName(), customerDTO.getAddress()));
+       return customerDAO.save(new Customer(customerDTO.getId(), customerDTO.getName(), customerDTO.getAddress(), customerDTO.getNic(), customerDTO.getPhoneNumber()));
     }
 
     public boolean UpdateCustomer(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
-      return   customerDAO.update(new Customer(customerDTO.getId(), customerDTO.getName(), customerDTO.getAddress()));
+      return   customerDAO.update(new Customer(customerDTO.getId(), customerDTO.getName(), customerDTO.getAddress(), customerDTO.getNic(), customerDTO.getPhoneNumber()));
     }
 
     public boolean existCustomer(String id) throws SQLException, ClassNotFoundException {

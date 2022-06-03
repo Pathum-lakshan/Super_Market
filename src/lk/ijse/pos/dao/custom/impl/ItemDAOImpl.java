@@ -51,14 +51,48 @@ public class ItemDAOImpl implements ItemDAO {
 
     @Override
     public String generateNewID() throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.executeQuery("SELECT code FROM Item ORDER BY code DESC LIMIT 1;");
+        /*ResultSet rst = SQLUtil.executeQuery("SELECT code FROM Item ORDER BY code DESC LIMIT 1;");
         if (rst.next()) {
             String id = rst.getString("code");
             int newItemId = Integer.parseInt(id.replace("I00-", "")) + 1;
             return String.format("I00-%03d", newItemId);
         } else {
             return "I00-001";
+        }*/
+
+        String table ="Item";
+        String incrementID=null;
+
+        ResultSet maxId = SQLUtil.execute("SELECT CONCAT(MAX(0+SUBSTRING(code,3))) FROM Item");
+
+        String id=null;
+
+        while (maxId.next()){
+            id=maxId.getString(1);
         }
+
+        if (id!=null){
+            int nextID = Integer.parseInt(id);
+            nextID++;
+            String cptl =table.substring(1,2);
+            char v=cptl.charAt(0);
+            char second = Character.toUpperCase(v);
+            String first =table.substring(0,1);
+            incrementID = first+second+nextID;
+
+        }else {
+            String cptl =table.substring(1,2);
+            char v=cptl.charAt(0);
+            char second = Character.toUpperCase(v);
+            String first =table.substring(0,1);
+            incrementID = first+second+"1";
+
+
+        }
+
+
+
+        return incrementID;
     }
 
 }

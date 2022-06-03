@@ -20,4 +20,13 @@ public class Util {
         notifications.hideAfter(Duration.seconds(4));
         notifications.showInformation();
     }
+    public static void PontificateError(String text, String title){
+        Notifications notifications=Notifications.create();
+
+        notifications.darkStyle();
+        notifications.text(text);
+        notifications.title(title);
+        notifications.hideAfter(Duration.seconds(4));
+        notifications.showError();
+    }
 }

@@ -12,6 +12,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,6 +35,7 @@ import lk.ijse.pos.dto.CustomerDTO;
 import lk.ijse.pos.dto.ItemDTO;
 import lk.ijse.pos.dto.OrderDTO;
 import lk.ijse.pos.dto.OrderDetailDTO;
+import lk.ijse.pos.view.Util;
 import lk.ijse.pos.view.tdm.OrderDetailTM;
 import lk.ijse.pos.view.tdm.OrdersTM;
 
@@ -223,7 +225,9 @@ public class PlaceOrdersFormController {
       if (cmbCustomerID.getValue()!= null ){
           if (cmbItemCode.getValue() != null){
 
-              if (txtQtyOnHand.getText().equals("")){new Alert(Alert.AlertType.ERROR, "empty qtyOnHand").show();}else {
+              if (txtQtyOnHand.getText().equals("")){
+                  Util.PontificateError("empty qtyOnHand","ERROR");
+              }else {
                   int qtyOnHand = Integer.parseInt(txtQtyOnHand.getText());
 
                   double unitPrice = Double.parseDouble(txtItemUnitPrice.getText());
@@ -288,15 +292,20 @@ public class PlaceOrdersFormController {
                       txtQtyOnHand.clear();
 
 
-                  }else {new Alert(Alert.AlertType.ERROR, "Invalid qty").show();}
+                  }else {
+                      Util.PontificateError("Invalid qty","ERROR");
+                  }
 
               }
 
 
 
 
-          }else {new Alert(Alert.AlertType.ERROR, "Select Item").show();}
-      }else {new Alert(Alert.AlertType.ERROR, "Select Customer").show();}
+          }else {Util.PontificateError("Select Item","ERROR");}
+
+      }else {
+          Util.PontificateError("Select Customer","ERROR");
+      }
 
 
 
@@ -308,9 +317,13 @@ public class PlaceOrdersFormController {
 
     public void btnPlaceOrderOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 
+//import javafx.beans.binding.Bindings;
+        if(Bindings.isEmpty(tblOrder.getItems()).get()) {
+            //EMPTY
+            Util.PontificateError("cant found order","ERROR");
+            cmbCustomerID.setDisable(false);
 
-        boolean b =  saveOrder(orderId,LocalDate.now(),cusID,Double.parseDouble(String.valueOf(lblTotal.getText())), tblOrder.getItems().stream().map(tm -> new OrderDetailDTO(orderId,
-              tm.getItemCode(),Integer.parseInt(tm.getQtyOnHand()) ,BigDecimal.valueOf(Double.parseDouble(tm.getUnitPrice())) )).collect(Collectors.toList()));
+        }else {
 
 
 
@@ -318,30 +331,48 @@ public class PlaceOrdersFormController {
 
 
 
-        if (b) {
-            new Alert(Alert.AlertType.INFORMATION, "Order has been placed successfully").show();
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Order has not been placed successfully").show();
+
+            boolean b =  saveOrder(orderId,LocalDate.now(),cusID,Double.parseDouble(String.valueOf(lblTotal.getText())), tblOrder.getItems().stream().map(tm -> new OrderDetailDTO(orderId,
+                    tm.getItemCode(),Integer.parseInt(tm.getQtyOnHand()) ,BigDecimal.valueOf(Double.parseDouble(tm.getUnitPrice())) )).collect(Collectors.toList()));
+
+
+
+
+
+
+
+            if (b) {
+
+                Util.notifications("Order has been placed successfully","SUCCESSFULLY");
+            } else {
+
+                Util.PontificateError("Order has not been placed successfully","NOT SUCCESSFULLY");
+            }
+
+            orderId = placeOrderBO.generateNewOrderId();
+            lblOrderID.setText(orderId);
+            cmbCustomerID.getSelectionModel().clearSelection();
+            cmbItemCode.getSelectionModel().clearSelection();
+            tblOrder.getItems().clear();
+            txtItemUnitPrice.clear();
+            txtItemQty.clear();
+            txtItemName.clear();
+            txtCustomerPhone.clear();
+            TxtItemDescription.clear();
+            txtCustomerAddress.clear();
+            cmbItemCode.setValue(null);
+            cmbCustomerID.setValue(null);
+            txtCustomerName.clear();
+            txtQtyOnHand.clear();
+            cmbCustomerID.setDisable(false);
+
+            calculateTotal();
         }
 
-        orderId = placeOrderBO.generateNewOrderId();
-        lblOrderID.setText(orderId);
-        cmbCustomerID.getSelectionModel().clearSelection();
-        cmbItemCode.getSelectionModel().clearSelection();
-        tblOrder.getItems().clear();
-        txtItemUnitPrice.clear();
-        txtItemQty.clear();
-        txtItemName.clear();
-        txtCustomerPhone.clear();
-        TxtItemDescription.clear();
-        txtCustomerAddress.clear();
-        cmbItemCode.setValue(null);
-        cmbCustomerID.setValue(null);
-        txtCustomerName.clear();
-        txtQtyOnHand.clear();
 
 
-        calculateTotal();
+
+
     }
     private void calculateTotal() {
 
