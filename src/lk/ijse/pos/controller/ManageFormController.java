@@ -19,9 +19,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import lk.ijse.pos.bo.BOFactory;
 import lk.ijse.pos.bo.custom.ManageCustomerBO;
 import lk.ijse.pos.dto.CustomerDTO;
+import lk.ijse.pos.view.Util;
 import lk.ijse.pos.view.tdm.CustomerTM;
 
 import java.sql.SQLException;
@@ -71,6 +73,7 @@ public class ManageFormController {
         txtCustomerAddress.setDisable(true);
         txtCustomerNIC.setDisable(true);
         txtCustomerPhoneNumber.setDisable(true);
+        btnAddCustomer.setDisable(true);
 
 
         tblCustomer.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -93,6 +96,30 @@ public class ManageFormController {
             }
         });
 
+        checkValidate(txtCustomerName,"^[A-Z][a-z]*[ ][A-Z][a-z]*$",btnAddCustomer);
+        checkValidate(txtCustomerNIC,"^([0-9]{9}[V]|[0-9]{12})$",btnAddCustomer);
+        checkValidate(txtCustomerPhoneNumber,"^(\\+|0)(94|[1-9]{2,3})(-| |)([0-9]{7}|[0-9]{2} [0-9]{7})$",btnAddCustomer);
+        checkValidate(txtCustomerAddress,"^[A-z ]+$",btnAddCustomer);
+
+
+    }
+
+
+
+    private void checkValidate(JFXTextField jfxTextField,String regex,JFXButton jfxButton) {
+        jfxTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+
+            if (newValue.matches(regex)){
+                jfxButton.setDisable(false);
+                jfxTextField.setFocusColor(Color.GREEN);
+            }
+            else {
+                jfxButton.setDisable(true);
+                jfxTextField.setFocusColor(Color.RED);
+            }
+
+
+        });
     }
 
     private void loadAllTable() {
@@ -180,7 +207,31 @@ if (newValue1!=null){checkText(txtCustomerName,newValue1.getName());}
 
     }
 
-    public void addCustomerOnAction(ActionEvent actionEvent) {
+    public void addCustomerOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        if (btnAddCustomer.getText().equals("Add Customer")){
+            if ( manageCustomerBO.saveCustomer(new CustomerDTO(txtCustomerID.getText(),txtCustomerName.getText(),txtCustomerAddress.getText(),txtCustomerNIC.getText(),txtCustomerPhoneNumber.getText()))){
+
+                Util.notifications("Customer has been saved successfully","SUCCESSFULLY");
+                loadAllCustomer();
+            }
+
+        }
+        else if (btnAddCustomer.getText().equals("Delete Customer")){
+
+            if (manageCustomerBO.deleteCustomer(txtCustomerID.getText())){
+                new Alert(Alert.AlertType.INFORMATION, "Customer has been Deleted successfully").show();
+                Util.notifications("Customer has been saved successfully","SUCCESSFULLY");
+                loadAllCustomer();
+            }
+        }
+        else {
+
+            if (manageCustomerBO.UpdateCustomer(new CustomerDTO(txtCustomerID.getText(),txtCustomerName.getText(),txtCustomerAddress.getText(),txtCustomerNIC.getText(),txtCustomerPhoneNumber.getText()))){
+                new Alert(Alert.AlertType.INFORMATION, "Customer has been Updated successfully").show();
+                loadAllCustomer();
+            }
+
+        }
     }
 
     public void txtCustomerAddressOnKeyRelease(KeyEvent keyEvent) {
@@ -192,4 +243,6 @@ if (newValue1!=null){checkText(txtCustomerName,newValue1.getName());}
     public void modifyOrderOnAction(ActionEvent actionEvent) {
 
     }
+
+
 }
