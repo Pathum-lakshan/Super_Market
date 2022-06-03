@@ -53,7 +53,7 @@ public class ManageFormController {
     public JFXTextField txtQtyOnHand;
     public JFXComboBox cmbItemCode;
     public JFXComboBox cmbOrderCustomerID;
-
+    private CustomerDTO newValue1;
     private final ManageCustomerBO manageCustomerBO = (ManageCustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.MANAGECUSTOMER);
 
     public JFXTextField txtCustomerID;
@@ -74,8 +74,9 @@ public class ManageFormController {
 
 
         tblCustomer.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+             newValue1 = newValue;
 
-            btnAddCustomer.setText(newValue != null ? "Update Customer" : "Add Customer");
+            btnAddCustomer.setText(newValue != null ? "Delete Customer" : "Add Customer");
 
             if (newValue != null) {
                 txtCustomerID.setText(newValue.getId());
@@ -125,31 +126,13 @@ public class ManageFormController {
 
     }
 
-    public void txtSupplyItemNameOnKeyRelease(KeyEvent keyEvent) {
-    }
 
-    public void txtSupplyItemQtyOnAction(KeyEvent keyEvent) {
-    }
-
-    public void addCustomerOnAction(ActionEvent actionEvent) {
-    }
-
-    public void txtSupplyCostOnAction(KeyEvent keyEvent) {
-    }
-
-    public void supplyIDOnKeyRelese(KeyEvent keyEvent) {
-    }
-
-    public void modifyOrderOnAction(ActionEvent actionEvent) {
-    }
-
-    public void cmbSupplyIDOnAction(ActionEvent actionEvent) {
-    }
 
 
 
     public void addOnAction(MouseEvent mouseEvent) throws SQLException, ClassNotFoundException {
 
+        newValue1=null;
 
         txtCustomerID.clear();
         txtCustomerID.setText(manageCustomerBO.generateNewId());
@@ -164,5 +147,36 @@ public class ManageFormController {
         txtCustomerAddress.setDisable(false);
         txtCustomerNIC.setDisable(false);
         txtCustomerPhoneNumber.setDisable(false);
+    }
+
+    public void txtCustomerNameOnKeyRelease(KeyEvent keyEvent) {
+
+        if (newValue1==null){
+
+            btnAddCustomer.setText("Add Customer");
+        }else if (txtCustomerName.getText().equals(newValue1.getName())){
+
+            btnAddCustomer.setText("Delete Customer");
+        }else {
+
+            btnAddCustomer.setText("Update Customer");
+        }
+
+    }
+
+    public void txtCustomerNicOnKeyRelease(KeyEvent keyEvent) {
+    }
+
+    public void txtCustomerPhoneNumberOnKeyRelease(KeyEvent keyEvent) {
+    }
+
+    public void addCustomerOnAction(ActionEvent actionEvent) {
+    }
+
+    public void txtCustomerAddressOnKeyRelease(KeyEvent keyEvent) {
+    }
+
+    public void modifyOrderOnAction(ActionEvent actionEvent) {
+
     }
 }
