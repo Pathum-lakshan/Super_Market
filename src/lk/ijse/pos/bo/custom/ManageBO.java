@@ -18,7 +18,7 @@ import lk.ijse.pos.entity.Item;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface ManageCustomerBO extends SuperBO {
+public interface ManageBO extends SuperBO {
     ArrayList<CustomerDTO> loadAllCustomers() throws SQLException, ClassNotFoundException;
     boolean saveCustomer(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException;
     boolean UpdateCustomer(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException;

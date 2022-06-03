@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 
 public class ItemTM  {
     private String code;
+    private String name;
     private String description;
     private BigDecimal unitPrice;
     private int qtyOnHand;
@@ -18,6 +19,22 @@ public class ItemTM  {
         this.description = description;
         this.unitPrice = unitPrice;
         this.qtyOnHand = qtyOnHand;
+    }
+
+    public ItemTM(String code, String name, String description, BigDecimal unitPrice, int qtyOnHand) {
+        this.code = code;
+        this.name = name;
+        this.description = description;
+        this.unitPrice = unitPrice;
+        this.qtyOnHand = qtyOnHand;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCode() {
@@ -56,6 +73,7 @@ public class ItemTM  {
     public String toString() {
         return "ItemTM{" +
                 "code='" + code + '\'' +
+                ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", unitPrice=" + unitPrice +
                 ", qtyOnHand=" + qtyOnHand +

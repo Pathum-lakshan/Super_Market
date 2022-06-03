@@ -39,7 +39,7 @@
                                 <Font name="System Bold" size="20.0" />
                             </font>
                         </JFXButton>
-                        <JFXButton layoutX="239.0" onAction="#manageOrderOnAction" prefHeight="50.0" prefWidth="239.0" styleClass="menuItem" stylesheets="@asserts/styles/css.css" text="Manage Order" textFill="#ffffff8c">
+                        <JFXButton layoutX="239.0" onAction="#manageOrderOnAction" prefHeight="50.0" prefWidth="239.0" styleClass="menuItem" stylesheets="@asserts/styles/css.css" text="Manage " textFill="#ffffff8c">
                             <font>
                                 <Font name="System Bold" size="20.0" />
                             </font>

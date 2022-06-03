@@ -9,7 +9,7 @@
 package lk.ijse.pos.bo;
 
 
-import lk.ijse.pos.bo.custom.impl.ManageCustomerBOImpl;
+import lk.ijse.pos.bo.custom.impl.ManageBOImpl;
 import lk.ijse.pos.bo.custom.impl.ManageItemsBOImpl;
 import lk.ijse.pos.bo.custom.impl.PlaceOrderBOImpl;
 
@@ -35,7 +35,7 @@ public class BOFactory {
     public SuperBO getBO(BOTypes boTypes) {
         switch (boTypes) {
             case MANAGECUSTOMER:
-                return new ManageCustomerBOImpl();
+                return new ManageBOImpl();
             case MANAGEITEM:
                 return new ManageItemsBOImpl();
             case PLACEORDER:

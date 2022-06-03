@@ -8,7 +8,7 @@
 
 package lk.ijse.pos.bo.custom.impl;
 
-import lk.ijse.pos.bo.custom.ManageCustomerBO;
+import lk.ijse.pos.bo.custom.ManageBO;
 import lk.ijse.pos.dao.DAOFactory;
 import lk.ijse.pos.dao.custom.CustomerDAO;
 import lk.ijse.pos.dao.custom.ItemDAO;
@@ -26,7 +26,7 @@ import lk.ijse.pos.entity.OrderDetails;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ManageCustomerBOImpl implements ManageCustomerBO {
+public class ManageBOImpl implements ManageBO {
     private final CustomerDAO customerDAO = (CustomerDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.CUSTOMER);
     private final OrderDao orderDAO = (OrderDao) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.ORDER);
     private final OrderDetailsDAO orderDetailsDAO = (OrderDetailsDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.ORDERDETAILS);

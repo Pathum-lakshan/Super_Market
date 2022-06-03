@@ -49,11 +49,15 @@ public class SignController {
 
 
     public void signInOnAction(ActionEvent actionEvent) throws IOException {
-        if (cmbUserType.getValue().equals("Cashier")){
+            if (cmbUserType.getValue().equals("Cashier")){
             Stage stage=(Stage) signInContext.getScene().getWindow();
             stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/DashBoardCashierForm.fxml"))));
             stage.centerOnScreen();
-        }else {}
+        }else {
+            Stage stage=(Stage) signInContext.getScene().getWindow();
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/AdminForm.fxml"))));
+            stage.centerOnScreen();
+        }
 
     }
 

@@ -21,12 +21,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import lk.ijse.pos.bo.BOFactory;
-import lk.ijse.pos.bo.custom.ManageCustomerBO;
+import lk.ijse.pos.bo.custom.ManageBO;
 import lk.ijse.pos.dto.CustomerDTO;
 import lk.ijse.pos.dto.ItemDTO;
 import lk.ijse.pos.dto.OrderDTO;
 import lk.ijse.pos.dto.OrderDetailDTO;
-import lk.ijse.pos.entity.Item;
 import lk.ijse.pos.view.util.Util;
 
 import java.math.BigDecimal;
@@ -62,7 +61,7 @@ public class ManageFormController {
     public JFXTextField txtQtyOnHands;
     private CustomerDTO newValue1;
     private OrderDetailDTO newValue2;
-    private final ManageCustomerBO manageCustomerBO = (ManageCustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.MANAGECUSTOMER);
+    private final ManageBO manageBO = (ManageBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.MANAGECUSTOMER);
 
     public JFXTextField txtCustomerID;
 
@@ -161,7 +160,7 @@ public class ManageFormController {
                     btnModifyOrder.setText("Modify Order");
                 }
                 try {
-                    ItemDTO itemDTO = manageCustomerBO.searchItem(String.valueOf(newValue));
+                    ItemDTO itemDTO = manageBO.searchItem(String.valueOf(newValue));
                     txtUnitPrice.setText(String.valueOf(itemDTO.getUnitPrice()));
                     if (txtQtyOnHands.getText().matches("^[0-9]*$") && !txtQtyOnHands.getText().equals("")){
 
@@ -221,7 +220,7 @@ public class ManageFormController {
     }
 
     private void loadAllItems() throws SQLException, ClassNotFoundException {
-        ArrayList<ItemDTO> itemDTOS = manageCustomerBO.loadAllItem();
+        ArrayList<ItemDTO> itemDTOS = manageBO.loadAllItem();
 
         for (ItemDTO itemDTO : itemDTOS
                 ) {
@@ -236,7 +235,7 @@ public class ManageFormController {
         try {
 
             //Loos Coupling
-            ArrayList<OrderDetailDTO> allOrder = manageCustomerBO.loadAllOrderDetails();
+            ArrayList<OrderDetailDTO> allOrder = manageBO.loadAllOrderDetails();
 
 
 
@@ -266,7 +265,7 @@ public class ManageFormController {
         try {
 
             //Loos Coupling
-            ArrayList<CustomerDTO> allCustomers = manageCustomerBO.loadAllCustomers();
+            ArrayList<CustomerDTO> allCustomers = manageBO.loadAllCustomers();
 
 
             for (CustomerDTO customer : allCustomers) {
@@ -292,7 +291,7 @@ public class ManageFormController {
         newValue1=null;
 
         txtCustomerID.clear();
-        txtCustomerID.setText(manageCustomerBO.generateNewId());
+        txtCustomerID.setText(manageBO.generateNewId());
         txtCustomerName.clear();
         txtCustomerAddress.clear();
         txtCustomerNIC.clear();
@@ -339,7 +338,7 @@ if (newValue1!=null){checkText(txtCustomerName,newValue1.getName());}
 
     public void addCustomerOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         if (btnAddCustomer.getText().equals("Add Customer")){
-            if ( manageCustomerBO.saveCustomer(new CustomerDTO(txtCustomerID.getText(),txtCustomerName.getText(),txtCustomerAddress.getText(),txtCustomerNIC.getText(),txtCustomerPhoneNumber.getText()))){
+            if ( manageBO.saveCustomer(new CustomerDTO(txtCustomerID.getText(),txtCustomerName.getText(),txtCustomerAddress.getText(),txtCustomerNIC.getText(),txtCustomerPhoneNumber.getText()))){
 
                 Util.notifications("Customer has been saved successfully","SUCCESSFULLY");
                 loadAllCustomer();
@@ -348,7 +347,7 @@ if (newValue1!=null){checkText(txtCustomerName,newValue1.getName());}
         }
         else if (btnAddCustomer.getText().equals("Delete Customer")){
 
-            if (manageCustomerBO.deleteCustomer(txtCustomerID.getText())){
+            if (manageBO.deleteCustomer(txtCustomerID.getText())){
 
                 Util.notifications("Customer has been Deleted successfully","SUCCESSFULLY");
                 loadAllCustomer();
@@ -356,7 +355,7 @@ if (newValue1!=null){checkText(txtCustomerName,newValue1.getName());}
         }
         else {
 
-            if (manageCustomerBO.UpdateCustomer(new CustomerDTO(txtCustomerID.getText(),txtCustomerName.getText(),txtCustomerAddress.getText(),txtCustomerNIC.getText(),txtCustomerPhoneNumber.getText()))){
+            if (manageBO.UpdateCustomer(new CustomerDTO(txtCustomerID.getText(),txtCustomerName.getText(),txtCustomerAddress.getText(),txtCustomerNIC.getText(),txtCustomerPhoneNumber.getText()))){
 
                 Util.notifications("Customer has been Updated successfully","SUCCESSFULLY");
                 loadAllCustomer();
@@ -382,9 +381,9 @@ if (newValue1!=null){checkText(txtCustomerName,newValue1.getName());}
     public void modifyOrderOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 
         if (btnModifyOrder.getText().equals("Delete Order")){
-            if ( manageCustomerBO.deleteOrderDetail(txtOrderID.getText())){
+            if ( manageBO.deleteOrderDetail(txtOrderID.getText())){
                 Util.notifications("Order Detail Deleted SuccessFull","DELETED");
-                if ( manageCustomerBO.deleteOrder(txtOrderID.getText())){
+                if ( manageBO.deleteOrder(txtOrderID.getText())){
                     Util.notifications("Order Deleted SuccessFull","DELETED");
                 }
 
@@ -404,10 +403,10 @@ if (newValue1!=null){checkText(txtCustomerName,newValue1.getName());}
         else {
 
 
-            if ( manageCustomerBO.UpdateOrderDetail(new OrderDetailDTO(txtOrderID.getText(),(String) cmbItemCode.getValue(),BigDecimal.valueOf(Double.parseDouble(txtUnitPrice.getText())),Integer.parseInt(txtQtyOnHands.getText())))){
+            if ( manageBO.UpdateOrderDetail(new OrderDetailDTO(txtOrderID.getText(),(String) cmbItemCode.getValue(),BigDecimal.valueOf(Double.parseDouble(txtUnitPrice.getText())),Integer.parseInt(txtQtyOnHands.getText())))){
                 Util.notifications("Order Detail Updated SuccessFull","UPDATED");
 
-                if ( manageCustomerBO.UpdateOrder(new OrderDTO(txtOrderID.getId(),Double.parseDouble(txtTotal.getText())))){
+                if ( manageBO.UpdateOrder(new OrderDTO(txtOrderID.getId(),Double.parseDouble(txtTotal.getText())))){
                     Util.notifications("Order Updated SuccessFull","UPDATED");
                 }
 
