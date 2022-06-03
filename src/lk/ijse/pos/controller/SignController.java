@@ -9,6 +9,7 @@
 package lk.ijse.pos.controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
@@ -31,10 +32,13 @@ public class SignController {
     public JFXButton btnSignIn;
 
     public AnchorPane signInContext;
+    public JFXComboBox cmbUserType;
 
     public void initialize(){
         visionOff.setVisible(false);
         txtPassword.setVisible(false);
+        cmbUserType.getItems().add("Admin");
+        cmbUserType.getItems().add("Cashier");
     }
 
     public void userNameOnKeyRelease(KeyEvent keyEvent) {
@@ -45,9 +49,12 @@ public class SignController {
 
 
     public void signInOnAction(ActionEvent actionEvent) throws IOException {
-        Stage stage=(Stage) signInContext.getScene().getWindow();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/DashBoardCashierForm.fxml"))));
-        stage.centerOnScreen();
+        if (cmbUserType.getValue().equals("Cashier")){
+            Stage stage=(Stage) signInContext.getScene().getWindow();
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/DashBoardCashierForm.fxml"))));
+            stage.centerOnScreen();
+        }else {}
+
     }
 
 

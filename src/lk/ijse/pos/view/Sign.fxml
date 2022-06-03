@@ -45,7 +45,7 @@
             <Font size="10.0" />
          </font></Label>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="55.0" layoutX="27.0" layoutY="105.0" stroke="WHITE" strokeType="INSIDE" width="350.0" />
-      <JFXComboBox focusColor="WHITE" labelFloat="true" layoutX="33.0" layoutY="113.0" prefHeight="40.0" prefWidth="278.0" style="-fx-prompt-text-fill: WHITE;" unFocusColor="BLACK" />
+      <JFXComboBox fx:id="cmbUserType" focusColor="WHITE" labelFloat="true" layoutX="33.0" layoutY="113.0" prefHeight="40.0" prefWidth="278.0" promptText="User Type" style="-fx-prompt-text-fill: WHITE;" unFocusColor="BLACK" />
       <Line endX="-46.0" layoutX="368.0" layoutY="112.0" startX="-46.0" startY="42.0" stroke="WHITE" />
       <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="324.0" layoutY="108.0" opacity="0.65" pickOnBounds="true" preserveRatio="true">
          <image>
