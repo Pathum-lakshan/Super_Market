@@ -33,4 +33,7 @@ public interface ManageCustomerBO extends SuperBO {
     boolean deleteOrderDetail(String id)throws SQLException, ClassNotFoundException;
 
     boolean deleteOrder(String id)throws SQLException, ClassNotFoundException;
+    boolean UpdateOrder(OrderDTO orderDTO) throws SQLException, ClassNotFoundException;
+    boolean UpdateOrderDetail(OrderDetailDTO orderDetailDTO) throws SQLException, ClassNotFoundException;
+    ItemDTO searchItem(String code) throws SQLException, ClassNotFoundException;
 }

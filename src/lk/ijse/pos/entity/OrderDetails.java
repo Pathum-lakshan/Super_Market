@@ -13,19 +13,22 @@ import java.math.BigDecimal;
 public class OrderDetails {
     private String oid;
     private String itemCode;
-    private BigDecimal unitPrice;
     private int qty;
-
+    private BigDecimal unitPrice;
 
     public OrderDetails() {
     }
 
-    public OrderDetails(String oid, String itemCode, BigDecimal unitPrice, int qty) {
+    public OrderDetails(String oid, String itemCode, int qty, BigDecimal unitPrice) {
         this.oid = oid;
         this.itemCode = itemCode;
-        this.unitPrice = unitPrice;
         this.qty = qty;
+        this.unitPrice = unitPrice;
     }
+
+
+
+
 
     public String getOid() {
         return oid;

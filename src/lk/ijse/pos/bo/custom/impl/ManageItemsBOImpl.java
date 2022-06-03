@@ -41,6 +41,8 @@ public class ManageItemsBOImpl implements ManageItemBO {
         itemDAO.save(new Item(itemDTO.getCode(),itemDTO.getDescription() , itemDTO.getQtyOnHand(), itemDTO.getUnitPrice()));
     }
 
+
+
     public void updateItems(ItemDTO itemDTO) throws SQLException, ClassNotFoundException {
         itemDAO.update(new Item(itemDTO.getCode(),itemDTO.getDescription() , itemDTO.getQtyOnHand(), itemDTO.getUnitPrice()));
     }

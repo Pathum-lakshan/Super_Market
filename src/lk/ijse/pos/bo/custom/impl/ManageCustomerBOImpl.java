@@ -91,6 +91,18 @@ public class ManageCustomerBOImpl implements ManageCustomerBO {
     public boolean deleteOrder(String id) throws SQLException, ClassNotFoundException {
         return orderDAO.delete(id);
     }
+    public boolean UpdateOrder(OrderDTO orderDTO) throws SQLException, ClassNotFoundException {
+        return orderDAO.update(new Order(orderDTO.getOrderId(),orderDTO.getTotal()));
+    }
+
+    public boolean UpdateOrderDetail(OrderDetailDTO orderDetailDTO) throws SQLException, ClassNotFoundException {
+        return orderDetailsDAO.update(new OrderDetails(orderDetailDTO.getOid(),orderDetailDTO.getItemCode(),orderDetailDTO.getQty(),orderDetailDTO.getUnitPrice()));
+    }
+
+    public ItemDTO searchItem(String code) throws SQLException, ClassNotFoundException {
+        Item search = itemDAO.search(code);
+        return new ItemDTO(search.getCode(),search.getDescription(),search.getUnitPrice(),search.getQtyOnHand(),search.getName());
+    }
 
     public boolean saveCustomer(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
        return customerDAO.save(new Customer(customerDTO.getId(), customerDTO.getName(), customerDTO.getAddress(), customerDTO.getNic(), customerDTO.getPhoneNumber()));

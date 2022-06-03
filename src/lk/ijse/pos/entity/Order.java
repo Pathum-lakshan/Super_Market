@@ -25,7 +25,10 @@ public class Order {
         this.total = total;
     }
 
-
+    public Order(String oid, double total) {
+        this.oid = oid;
+        this.total = total;
+    }
 
     public String getOid() {
         return oid;

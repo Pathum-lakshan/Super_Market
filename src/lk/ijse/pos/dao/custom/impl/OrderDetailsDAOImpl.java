@@ -14,7 +14,7 @@ public class OrderDetailsDAOImpl implements OrderDetailsDAO {
         ResultSet rst = SQLUtil.executeQuery("SELECT * FROM orderDetail");
         ArrayList<OrderDetails> all = new ArrayList<>();
         while (rst.next()){
-            all.add(new OrderDetails(rst.getString(1),rst.getString(2),rst.getBigDecimal(3),rst.getInt(4)));
+            all.add(new OrderDetails(rst.getString(1),rst.getString(2),rst.getInt(4),rst.getBigDecimal(3)));
         }
 
         return all;
@@ -27,7 +27,8 @@ public class OrderDetailsDAOImpl implements OrderDetailsDAO {
 
     @Override
     public boolean update(OrderDetails entity) throws SQLException, ClassNotFoundException {
-        return false;
+        return SQLUtil.executeUpdate("UPDATE OrderDetail SET ItemCode=?, unitPrice=?, OrderQty=? WHERE orderId=? AND ItemCode=? ", entity.getItemCode(), entity.getUnitPrice(), entity.getQty(), entity.getOid(),entity.getItemCode());
+
     }
 
     @Override

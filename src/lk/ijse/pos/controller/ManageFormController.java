@@ -160,7 +160,31 @@ public class ManageFormController {
                 }else {
                     btnModifyOrder.setText("Modify Order");
                 }
+                try {
+                    ItemDTO itemDTO = manageCustomerBO.searchItem(String.valueOf(newValue));
+                    txtUnitPrice.setText(String.valueOf(itemDTO.getUnitPrice()));
+                    if (txtQtyOnHands.getText().matches("^[0-9]*$") && !txtQtyOnHands.getText().equals("")){
+
+
+
+                        int qty = Integer.parseInt(txtQtyOnHands.getText());
+                        double unitPrice = Double.parseDouble(txtUnitPrice.getText());
+
+                        double total = qty *unitPrice;
+
+                        txtTotal.setText(String.valueOf(total));
+                    }
+                    if (txtQtyOnHands.getText().equals("")){
+                        txtTotal.setText("000.00");
+                    }
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
+
+
 
         });
 
@@ -377,7 +401,30 @@ if (newValue1!=null){checkText(txtCustomerName,newValue1.getName());}
             }
 
         }
-        else {}
+        else {
+
+
+            if ( manageCustomerBO.UpdateOrderDetail(new OrderDetailDTO(txtOrderID.getText(),(String) cmbItemCode.getValue(),BigDecimal.valueOf(Double.parseDouble(txtUnitPrice.getText())),Integer.parseInt(txtQtyOnHands.getText())))){
+                Util.notifications("Order Detail Updated SuccessFull","UPDATED");
+
+                if ( manageCustomerBO.UpdateOrder(new OrderDTO(txtOrderID.getId(),Double.parseDouble(txtTotal.getText())))){
+                    Util.notifications("Order Updated SuccessFull","UPDATED");
+                }
+
+
+
+                txtTotal.clear();
+                txtQtyOnHands.clear();
+                txtOrderID.clear();
+                txtUnitPrice.clear();
+                cmbItemCode.setValue(null);
+                txtQtyOnHands.setDisable(true);
+
+                loadAllOrder();
+            }
+
+
+        }
 
     }
 

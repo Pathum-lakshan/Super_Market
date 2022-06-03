@@ -24,7 +24,8 @@ public class OrderDAOImpl implements OrderDao {
 
     @Override
     public boolean update(Order entity) throws SQLException, ClassNotFoundException {
-        return false;
+        return SQLUtil.executeUpdate("UPDATE Orders SET total=? WHERE OrderId=?", entity.getTotal(), entity.getOid());
+
     }
 
     @Override
