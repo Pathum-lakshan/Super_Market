@@ -62,7 +62,7 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
         }
 
         for (OrderDetailDTO detail : orderDTO.getOrderDetails()) {
-            boolean save1 = orderDetailsDAO.save(new OrderDetails(detail.getOid(),detail.getItemCode(),detail.getQty(),detail.getUnitPrice()));
+            boolean save1 = orderDetailsDAO.save(new OrderDetails(detail.getOid(),detail.getItemCode(),detail.getUnitPrice(),detail.getQty()));
             if (!save1) {
                 connection.rollback();
                 connection.setAutoCommit(true);

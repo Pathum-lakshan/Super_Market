@@ -10,6 +10,10 @@ package lk.ijse.pos.bo.custom;
 
 import lk.ijse.pos.bo.SuperBO;
 import lk.ijse.pos.dto.CustomerDTO;
+import lk.ijse.pos.dto.ItemDTO;
+import lk.ijse.pos.dto.OrderDTO;
+import lk.ijse.pos.dto.OrderDetailDTO;
+import lk.ijse.pos.entity.Item;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,4 +25,12 @@ public interface ManageCustomerBO extends SuperBO {
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException;
     boolean deleteCustomer(String id) throws SQLException, ClassNotFoundException;
     String generateNewId () throws SQLException, ClassNotFoundException;
+    ArrayList<OrderDetailDTO> loadAllOrderDetails() throws SQLException, ClassNotFoundException;
+    ArrayList<OrderDTO> loadAllOrder() throws SQLException, ClassNotFoundException;
+
+    ArrayList<ItemDTO> loadAllItem()throws SQLException, ClassNotFoundException;
+
+    boolean deleteOrderDetail(String id)throws SQLException, ClassNotFoundException;
+
+    boolean deleteOrder(String id)throws SQLException, ClassNotFoundException;
 }

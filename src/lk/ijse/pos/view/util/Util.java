@@ -6,7 +6,7 @@
  * @Since : 0.1.0
  */
 
-package lk.ijse.pos.view;
+package lk.ijse.pos.view.util;
 
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;

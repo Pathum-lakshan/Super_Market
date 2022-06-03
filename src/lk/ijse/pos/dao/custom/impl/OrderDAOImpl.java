@@ -2,10 +2,12 @@ package lk.ijse.pos.dao.custom.impl;
 
 import lk.ijse.pos.dao.SQLUtil;
 import lk.ijse.pos.dao.custom.OrderDao;
+import lk.ijse.pos.entity.Item;
 import lk.ijse.pos.entity.Order;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 
@@ -27,6 +29,10 @@ public class OrderDAOImpl implements OrderDao {
 
     @Override
     public Order search(String s) throws SQLException, ClassNotFoundException {
+        ResultSet rst = SQLUtil.executeQuery("SELECT * FROM Orders WHERE orderId=?", s);
+        if (rst.next()) {
+            return new Order(rst.getString(1), LocalDate.parse((CharSequence) rst.getDate(2)), rst.getString(3), rst.getDouble(4));
+        }
         return null;
     }
 
@@ -37,7 +43,7 @@ public class OrderDAOImpl implements OrderDao {
 
     @Override
     public boolean delete(String s) throws SQLException, ClassNotFoundException {
-        return false;
+        return SQLUtil.executeUpdate("DELETE FROM Orders WHERE OrderId=?", s);
     }
 
     @Override

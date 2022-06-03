@@ -8,6 +8,8 @@
 
 package lk.ijse.pos.entity;
 
+import java.math.BigDecimal;
+import java.sql.Date;
 import java.time.LocalDate;
 
 public class Order {
@@ -23,8 +25,7 @@ public class Order {
         this.total = total;
     }
 
-    public Order() {
-    }
+
 
     public String getOid() {
         return oid;

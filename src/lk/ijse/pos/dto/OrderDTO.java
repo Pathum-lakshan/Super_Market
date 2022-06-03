@@ -10,7 +10,16 @@ public class OrderDTO  {
     private LocalDate orderDate;
     private String cusID;
     private double total;
+
+
     List<OrderDetailDTO> orderDetails;
+
+    public OrderDTO(String orderId, LocalDate orderDate, String cusID, double total) {
+        this.orderId = orderId;
+        this.orderDate = orderDate;
+        this.cusID = cusID;
+        this.total = total;
+    }
 
     public OrderDTO() {
     }

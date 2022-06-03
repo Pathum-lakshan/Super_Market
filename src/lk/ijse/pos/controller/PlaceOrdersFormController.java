@@ -11,43 +11,28 @@ package lk.ijse.pos.controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import lk.ijse.pos.bo.BOFactory;
 import lk.ijse.pos.bo.custom.PlaceOrderBO;
-import lk.ijse.pos.bo.custom.impl.PlaceOrderBOImpl;
-import lk.ijse.pos.db.DBConnection;
 import lk.ijse.pos.dto.CustomerDTO;
 import lk.ijse.pos.dto.ItemDTO;
 import lk.ijse.pos.dto.OrderDTO;
 import lk.ijse.pos.dto.OrderDetailDTO;
-import lk.ijse.pos.view.Util;
-import lk.ijse.pos.view.tdm.OrderDetailTM;
+import lk.ijse.pos.view.util.Util;
 import lk.ijse.pos.view.tdm.OrdersTM;
 
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.net.URL;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class PlaceOrdersFormController {
@@ -333,7 +318,7 @@ public class PlaceOrdersFormController {
 
 
             boolean b =  saveOrder(orderId,LocalDate.now(),cusID,Double.parseDouble(String.valueOf(lblTotal.getText())), tblOrder.getItems().stream().map(tm -> new OrderDetailDTO(orderId,
-                    tm.getItemCode(),Integer.parseInt(tm.getQtyOnHand()) ,BigDecimal.valueOf(Double.parseDouble(tm.getUnitPrice())) )).collect(Collectors.toList()));
+                    tm.getItemCode() ,BigDecimal.valueOf(Double.parseDouble(tm.getUnitPrice())),Integer.parseInt(tm.getQtyOnHand()) )).collect(Collectors.toList()));
 
 
 

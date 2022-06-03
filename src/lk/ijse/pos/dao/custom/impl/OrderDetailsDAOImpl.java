@@ -11,7 +11,13 @@ import java.util.ArrayList;
 public class OrderDetailsDAOImpl implements OrderDetailsDAO {
     @Override
     public ArrayList<OrderDetails> getAll() throws SQLException, ClassNotFoundException {
-        return null;
+        ResultSet rst = SQLUtil.executeQuery("SELECT * FROM orderDetail");
+        ArrayList<OrderDetails> all = new ArrayList<>();
+        while (rst.next()){
+            all.add(new OrderDetails(rst.getString(1),rst.getString(2),rst.getBigDecimal(3),rst.getInt(4)));
+        }
+
+        return all;
     }
 
     @Override
@@ -36,7 +42,7 @@ public class OrderDetailsDAOImpl implements OrderDetailsDAO {
 
     @Override
     public boolean delete(String s) throws SQLException, ClassNotFoundException {
-        return false;
+        return SQLUtil.executeUpdate("DELETE FROM OrderDetail WHERE OrderId=?", s);
     }
 
     @Override

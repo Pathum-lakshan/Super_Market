@@ -23,9 +23,13 @@ import javafx.scene.paint.Color;
 import lk.ijse.pos.bo.BOFactory;
 import lk.ijse.pos.bo.custom.ManageCustomerBO;
 import lk.ijse.pos.dto.CustomerDTO;
-import lk.ijse.pos.view.Util;
-import lk.ijse.pos.view.tdm.CustomerTM;
+import lk.ijse.pos.dto.ItemDTO;
+import lk.ijse.pos.dto.OrderDTO;
+import lk.ijse.pos.dto.OrderDetailDTO;
+import lk.ijse.pos.entity.Item;
+import lk.ijse.pos.view.util.Util;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -43,31 +47,67 @@ public class ManageFormController {
     public TableColumn colCusNIC;
     public TableColumn colCusPhoneNumber;
     public JFXTextField txtCustomerAddress;
-    public TableView tblOrder;
+    public TableView <OrderDetailDTO>tblOrder;
     public TableColumn colOrderID;
-    public TableColumn colOrderDate;
     public TableColumn colOrderQtyOnHand;
-    public TableColumn colOrderCusID;
-    public TableColumn colOrderItemCode;
-    public JFXTextField txtOrderDate;
     public JFXButton btnModifyOrder;
-    public JFXComboBox cmbOrderID;
-    public JFXTextField txtQtyOnHand;
+    public TableColumn colItemCode;
+    public TableColumn colOrderUnitPrice;
+    public TableColumn colTotal;
+
+    public JFXTextField txtOrderID;
+    public JFXTextField txtUnitPrice;
+    public JFXTextField txtTotal;
     public JFXComboBox cmbItemCode;
-    public JFXComboBox cmbOrderCustomerID;
+    public JFXTextField txtQtyOnHands;
     private CustomerDTO newValue1;
+    private OrderDetailDTO newValue2;
     private final ManageCustomerBO manageCustomerBO = (ManageCustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.MANAGECUSTOMER);
 
     public JFXTextField txtCustomerID;
 
-    public void initialize(){
+    private int qty;
+
+    public void initialize() throws SQLException, ClassNotFoundException {
         colCusID.setCellValueFactory(new PropertyValueFactory<>("id"));
         colCusName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colCusAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         colCusNIC.setCellValueFactory(new PropertyValueFactory<>("nic"));
         colCusPhoneNumber.setCellValueFactory(new PropertyValueFactory<>("PhoneNumber"));
+
+
+        colOrderID.setCellValueFactory(new PropertyValueFactory<>("oid"));
+        colItemCode.setCellValueFactory(new PropertyValueFactory<>("itemCode"));
+        colOrderQtyOnHand.setCellValueFactory(new PropertyValueFactory<>("qty"));
+        colOrderUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
+        colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
+
+
+        txtQtyOnHands.textProperty().addListener((observable, oldValue, newValue) -> {
+            checkValidate(txtQtyOnHands,"^[0-9]*$",btnModifyOrder);
+
+
+        });
+
+        txtTotal.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.equals(newValue2.getTotal()+"")){
+
+                btnModifyOrder.setText("Delete Order");
+            }else if (txtTotal.getText().equals("000.00")){
+                btnModifyOrder.setText("Delete Order");
+            }
+            else {
+                btnModifyOrder.setText("Modify Order");
+
+            }
+
+
+        });
+
+
         loadAllTable();
 
+        txtQtyOnHands.setDisable(true);
         txtCustomerID.setDisable(true);
         txtCustomerName.setDisable(true);
         txtCustomerAddress.setDisable(true);
@@ -96,6 +136,34 @@ public class ManageFormController {
             }
         });
 
+        tblOrder.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+             newValue2 = newValue;
+
+
+            btnModifyOrder.setText(newValue != null ? "Delete Order" : "Modify Order");
+
+            if (newValue != null) {
+                qty=newValue.getQty();
+                txtQtyOnHands.setDisable(false);
+                txtOrderID.setText(newValue.getOid());
+                txtUnitPrice.setText(String.valueOf(newValue.getQty()));
+                txtTotal.setText(String.valueOf(newValue.getTotal()));
+                txtQtyOnHands.setText(String.valueOf(newValue.getUnitPrice()));
+                cmbItemCode.setValue(newValue.getItemCode());
+            }
+        });
+
+        cmbItemCode.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue!=null){
+                if (newValue.equals(newValue2.getItemCode())){
+                    btnModifyOrder.setText("Delete Order");
+                }else {
+                    btnModifyOrder.setText("Modify Order");
+                }
+            }
+
+        });
+
         checkValidate(txtCustomerName,"^[A-Z][a-z]*[ ][A-Z][a-z]*$",btnAddCustomer);
         checkValidate(txtCustomerNIC,"^([0-9]{9}[V]|[0-9]{12})$",btnAddCustomer);
         checkValidate(txtCustomerPhoneNumber,"^(\\+|0)(94|[1-9]{2,3})(-| |)([0-9]{7}|[0-9]{2} [0-9]{7})$",btnAddCustomer);
@@ -122,13 +190,50 @@ public class ManageFormController {
         });
     }
 
-    private void loadAllTable() {
+    private void loadAllTable() throws SQLException, ClassNotFoundException {
         loadAllCustomer();
         loadAllOrder();
+        loadAllItems();
+    }
+
+    private void loadAllItems() throws SQLException, ClassNotFoundException {
+        ArrayList<ItemDTO> itemDTOS = manageCustomerBO.loadAllItem();
+
+        for (ItemDTO itemDTO : itemDTOS
+                ) {
+            cmbItemCode.getItems().add(itemDTO.getCode());
+        }
+
     }
 
     private void loadAllOrder() {
+        tblOrder.getItems().clear();
+        /*Get all customers*/
+        try {
 
+            //Loos Coupling
+            ArrayList<OrderDetailDTO> allOrder = manageCustomerBO.loadAllOrderDetails();
+
+
+
+            for (OrderDetailDTO orderDetailDTO : allOrder) {
+
+                Double unitPrice =Double.parseDouble(String.valueOf(orderDetailDTO.getUnitPrice())) ;
+
+                int qty =  orderDetailDTO.getQty();
+
+                double total = unitPrice*qty;
+
+                tblOrder.getItems().add(new OrderDetailDTO(orderDetailDTO.getOid(),orderDetailDTO.getItemCode(),orderDetailDTO.getUnitPrice(),orderDetailDTO.getQty(),total));
+
+
+            }
+
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
     }
 
     private void loadAllCustomer() {
@@ -247,11 +352,52 @@ if (newValue1!=null){checkText(txtCustomerName,newValue1.getName());}
         if (newValue1!=null){checkText(txtCustomerAddress,newValue1.getAddress());}
 
 
-    }
-
-    public void modifyOrderOnAction(ActionEvent actionEvent) {
 
     }
 
+    public void modifyOrderOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 
+        if (btnModifyOrder.getText().equals("Delete Order")){
+            if ( manageCustomerBO.deleteOrderDetail(txtOrderID.getText())){
+                Util.notifications("Order Detail Deleted SuccessFull","DELETED");
+                if ( manageCustomerBO.deleteOrder(txtOrderID.getText())){
+                    Util.notifications("Order Deleted SuccessFull","DELETED");
+                }
+
+
+
+                txtTotal.clear();
+                txtQtyOnHands.clear();
+                txtOrderID.clear();
+                txtUnitPrice.clear();
+                cmbItemCode.setValue(null);
+                txtQtyOnHands.setDisable(true);
+
+                loadAllOrder();
+            }
+
+        }
+        else {}
+
+    }
+
+    public void txtQtyOnKeyRelease(KeyEvent keyEvent) {
+
+
+
+        if (txtQtyOnHands.getText().matches("^[0-9]*$") && !txtQtyOnHands.getText().equals("")){
+
+
+
+            int qty = Integer.parseInt(txtQtyOnHands.getText());
+            double unitPrice = Double.parseDouble(txtUnitPrice.getText());
+
+            double total = qty *unitPrice;
+
+            txtTotal.setText(String.valueOf(total));
+        }
+        if (txtQtyOnHands.getText().equals("")){
+            txtTotal.setText("000.00");
+        }
+    }
 }
