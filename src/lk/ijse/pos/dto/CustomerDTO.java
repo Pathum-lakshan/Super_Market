@@ -8,13 +8,23 @@ public class CustomerDTO implements Serializable {
     private String id;
     private String name;
     private String address;
+    private String nic;
     private String phoneNumber;
 
-    public CustomerDTO(String id, String name, String address, String phoneNumber) {
+    public CustomerDTO(String id, String name, String address, String nic, String phoneNumber) {
         this.id = id;
         this.name = name;
         this.address = address;
+        this.nic = nic;
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getNic() {
+        return nic;
+    }
+
+    public void setNic(String nic) {
+        this.nic = nic;
     }
 
     public String getPhoneNumber() {
@@ -64,6 +74,8 @@ public class CustomerDTO implements Serializable {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
+                ", nic='" + nic + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
     }
 }

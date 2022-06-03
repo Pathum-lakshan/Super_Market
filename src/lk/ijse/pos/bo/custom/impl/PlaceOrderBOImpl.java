@@ -44,18 +44,16 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
     public boolean placeOrder(OrderDTO orderDTO) throws SQLException, ClassNotFoundException {
 
 
-       return orderDAO.save(new Order(orderDTO.getOrderId(),orderDTO.getOrderDate(),orderDTO.getCusName(),orderDTO.getTotal()));
-
         /*Transaction*/
-/*
+
         Connection connection = DBConnection.getDbConnection().getConnection();
-        *//*if order id already exist*//*
+
         if (orderDAO.exist(orderDTO.getOrderId())) {
 
         }
 
         connection.setAutoCommit(false);
-        boolean save = orderDAO.save(new Order(orderDTO.getOrderId(), orderDTO.getOrderDate(), orderDTO.getCustomerId()));
+        boolean save = orderDAO.save(new Order(orderDTO.getOrderId(), orderDTO.getOrderDate(),orderDTO.getCusID(),orderDTO.getTotal()));
 
         if (!save) {
             connection.rollback();
@@ -88,14 +86,14 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
         }
         connection.commit();
         connection.setAutoCommit(true);
-        return true;*/
+        return true;
 
 
     }
 
     public CustomerDTO searchCustomer(String id) throws SQLException, ClassNotFoundException {
         Customer search = customerDAO.search(id);
-        return new CustomerDTO(search.getId(),search.getName(),search.getAddress(),search.getPhone());
+        return new CustomerDTO(search.getId(),search.getName(),search.getAddress(),search.getNic(),search.getPhone());
     }
 
     public ItemDTO searchItem(String code) throws SQLException, ClassNotFoundException {

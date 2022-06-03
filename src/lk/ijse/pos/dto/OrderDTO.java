@@ -8,17 +8,27 @@ import java.util.List;
 public class OrderDTO  {
     private String orderId;
     private LocalDate orderDate;
-    private String cusName;
+    private String cusID;
     private double total;
+    List<OrderDetailDTO> orderDetails;
 
     public OrderDTO() {
     }
 
-    public OrderDTO(String orderId, LocalDate orderDate, String cusName, double total) {
+    public OrderDTO(String orderId, LocalDate orderDate, String cusID, double total, List<OrderDetailDTO> orderDetails) {
         this.orderId = orderId;
         this.orderDate = orderDate;
-        this.cusName = cusName;
+        this.cusID = cusID;
         this.total = total;
+        this.orderDetails = orderDetails;
+    }
+
+    public List<OrderDetailDTO> getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(List<OrderDetailDTO> orderDetails) {
+        this.orderDetails = orderDetails;
     }
 
     public String getOrderId() {
@@ -37,12 +47,12 @@ public class OrderDTO  {
         this.orderDate = orderDate;
     }
 
-    public String getCusName() {
-        return cusName;
+    public String getCusID() {
+        return cusID;
     }
 
-    public void setCusName(String cusName) {
-        this.cusName = cusName;
+    public void setCusID(String cusID) {
+        this.cusID = cusID;
     }
 
     public double getTotal() {
@@ -58,8 +68,10 @@ public class OrderDTO  {
         return "OrderDTO{" +
                 "orderId='" + orderId + '\'' +
                 ", orderDate=" + orderDate +
-                ", cusName='" + cusName + '\'' +
+                ", cusID='" + cusID + '\'' +
                 ", total=" + total +
+                ", orderDetails=" + orderDetails +
                 '}';
     }
 }
+

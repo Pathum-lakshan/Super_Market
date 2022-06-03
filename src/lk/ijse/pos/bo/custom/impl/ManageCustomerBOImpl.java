@@ -28,7 +28,7 @@ public class ManageCustomerBOImpl implements ManageCustomerBO {
 
         for (Customer customer: all
              ) {
-            allCustomer.add(new CustomerDTO(customer.getId(), customer.getName(), customer.getAddress()));
+            allCustomer.add(new CustomerDTO(customer.getId(), customer.getName(), customer.getAddress(),customer.getNic(),customer.getPhone()));
         }
 
         return allCustomer;

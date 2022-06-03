@@ -13,13 +13,13 @@ import java.time.LocalDate;
 public class Order {
     private String oid;
     private LocalDate date;
-    private String cusName;
+    private String cusID;
     private double total;
 
     public Order(String oid, LocalDate date, String cusName, double total) {
         this.oid = oid;
         this.date = date;
-        this.cusName = cusName;
+        this.cusID = cusName;
         this.total = total;
     }
 
@@ -42,12 +42,12 @@ public class Order {
         this.date = date;
     }
 
-    public String getCusName() {
-        return cusName;
+    public String getCusID() {
+        return cusID;
     }
 
-    public void setCusName(String cusName) {
-        this.cusName = cusName;
+    public void setCusID(String cusID) {
+        this.cusID = cusID;
     }
 
     public double getTotal() {
@@ -63,7 +63,7 @@ public class Order {
         return "Order{" +
                 "oid='" + oid + '\'' +
                 ", date=" + date +
-                ", cusName='" + cusName + '\'' +
+                ", cusName='" + cusID + '\'' +
                 ", total=" + total +
                 '}';
     }

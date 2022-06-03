@@ -77,7 +77,7 @@ public class ManageCustomersFormController {
 
 
             for (CustomerDTO customer : allCustomers) {
-                tblCustomers.getItems().add(new CustomerTM(customer.getId(), customer.getName(), customer.getAddress()));
+              //  tblCustomers.getItems().add(new CustomerTM(customer.getId(), customer.getName(), customer.getAddress()));
             }
 
         } catch (SQLException e) {
@@ -151,7 +151,7 @@ public class ManageCustomersFormController {
 
                 manageCustomerBO.saveCustomer(new CustomerDTO(id, name, address));
 
-                tblCustomers.getItems().add(new CustomerTM(id, name, address));
+               // tblCustomers.getItems().add(new CustomerTM(id, name, address));
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, "Failed to save the customer " + e.getMessage()).show();
                 e.printStackTrace();

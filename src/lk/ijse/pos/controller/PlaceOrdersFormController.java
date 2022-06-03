@@ -72,6 +72,9 @@ public class PlaceOrdersFormController {
     public JFXButton btnAdd;
 
     private String orderId;
+    private String cusID;
+
+
 
 
     private final PlaceOrderBO placeOrderBO = (PlaceOrderBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PLACEORDER);
@@ -231,6 +234,10 @@ public class PlaceOrdersFormController {
 
                   if (itemQty>qtyOnHand){
 
+                      cusID= String.valueOf(cmbCustomerID.getValue());
+
+                      cmbCustomerID.setDisable(true);
+
                       String totalOfQtyOnHand= String.valueOf(qtyOnHand*unitPrice);
 
                       String itemCode= String.valueOf(cmbItemCode.getValue());
@@ -272,12 +279,12 @@ public class PlaceOrdersFormController {
                       txtItemUnitPrice.clear();
                       txtItemQty.clear();
                       txtItemName.clear();
-                      txtCustomerPhone.clear();
+                     // txtCustomerPhone.clear();
                       TxtItemDescription.clear();
-                      txtCustomerAddress.clear();
+                     // txtCustomerAddress.clear();
                       cmbItemCode.setValue(null);
-                      cmbCustomerID.setValue(null);
-                      txtCustomerName.clear();
+                     // cmbCustomerID.setValue(null);
+                      //txtCustomerName.clear();
                       txtQtyOnHand.clear();
 
 
@@ -300,8 +307,17 @@ public class PlaceOrdersFormController {
     }
 
     public void btnPlaceOrderOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        OrdersTM orderDetailTM = tblOrder.getItems().stream().filter(detail -> detail.getCustomerName().equals(detail.getCustomerName())).findFirst().get();
-        boolean b =    placeOrderBO.placeOrder(new OrderDTO(orderId,LocalDate.now(),orderDetailTM.getCustomerName(),Double.parseDouble(orderDetailTM.getTotal()) ));
+
+
+        boolean b =  saveOrder(orderId,LocalDate.now(),cusID,Double.parseDouble(String.valueOf(lblTotal.getText())), tblOrder.getItems().stream().map(tm -> new OrderDetailDTO(orderId,
+              tm.getItemCode(),Integer.parseInt(tm.getQtyOnHand()) ,BigDecimal.valueOf(Double.parseDouble(tm.getUnitPrice())) )).collect(Collectors.toList()));
+
+
+
+
+
+
+
         if (b) {
             new Alert(Alert.AlertType.INFORMATION, "Order has been placed successfully").show();
         } else {
@@ -328,8 +344,8 @@ public class PlaceOrdersFormController {
         calculateTotal();
     }
     private void calculateTotal() {
-        BigDecimal total = new BigDecimal(0);
 
+         BigDecimal total = new BigDecimal(0);
         for (OrdersTM detail : tblOrder.getItems()) {
 
             double x = Double.parseDouble(detail.getTotal());
@@ -340,6 +356,10 @@ public class PlaceOrdersFormController {
         }
         lblTotal.setText(String.valueOf(total));
     }
+    public boolean saveOrder(String orderId, LocalDate orderDate, String customerId,double total, List<OrderDetailDTO> orderDetails) throws SQLException, ClassNotFoundException {
+      return   placeOrderBO.placeOrder(
+              new OrderDTO(orderId,orderDate,customerId,total,orderDetails));
 
+    }
 
 }

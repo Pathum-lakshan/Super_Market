@@ -15,7 +15,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         ResultSet rst = SQLUtil.executeQuery("SELECT * FROM Customer");
         ArrayList<Customer> allCustomers = new ArrayList<>();
         while (rst.next()) {
-            allCustomers.add(new Customer(rst.getString(1), rst.getString(2), rst.getString(3)));
+            allCustomers.add(new Customer(rst.getString(1), rst.getString(2), rst.getString(3),rst.getString(4),rst.getString(5)));
         }
         return allCustomers;
     }
@@ -53,9 +53,9 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public String generateNewID() throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.executeQuery("SELECT id FROM Customer ORDER BY id DESC LIMIT 1;");
+        ResultSet rst = SQLUtil.executeQuery("SELECT cusId FROM Customer ORDER BY cusId DESC LIMIT 1;");
         if (rst.next()) {
-            String id = rst.getString("id");
+            String id = rst.getString("cusId");
             int newCustomerId = Integer.parseInt(id.replace("C00-", "")) + 1;
             return String.format("C00-%03d", newCustomerId);
         } else {
