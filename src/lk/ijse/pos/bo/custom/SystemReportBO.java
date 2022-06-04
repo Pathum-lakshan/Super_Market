@@ -9,6 +9,11 @@
 package lk.ijse.pos.bo.custom;
 
 import lk.ijse.pos.bo.SuperBO;
+import lk.ijse.pos.dto.OrderDTO;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public interface SystemReportBO extends SuperBO {
+    ArrayList<OrderDTO> loadAllOrder() throws SQLException, ClassNotFoundException;
 }

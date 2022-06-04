@@ -29,10 +29,16 @@ public class AdminFormController {
         WorkingContext.getChildren().add(parent);
     }
 
-    public void manageItemOnAction(ActionEvent actionEvent) {
+    public void manageItemOnAction(ActionEvent actionEvent) throws IOException {
+        WorkingContext.getChildren().clear();
+        Parent parent = FXMLLoader.load(this.getClass().getResource("../view/ManageItemForm.fxml"));
+        WorkingContext.getChildren().add(parent);
     }
 
-    public void SystemReportOnAction(ActionEvent actionEvent) {
+    public void SystemReportOnAction(ActionEvent actionEvent) throws IOException {
+        WorkingContext.getChildren().clear();
+        Parent parent = FXMLLoader.load(this.getClass().getResource("../view/SystemReportForm.fxml"));
+        WorkingContext.getChildren().add(parent);
     }
 
     public void closeMouseOnAction(MouseEvent mouseEvent) {
@@ -40,7 +46,10 @@ public class AdminFormController {
         stage.close();
     }
 
-    public void homeOnMouseClick(MouseEvent mouseEvent) {
+    public void homeOnMouseClick(MouseEvent mouseEvent) throws IOException {
+        WorkingContext.getChildren().clear();
+        Parent parent = FXMLLoader.load(this.getClass().getResource("../view/ManageItemForm.fxml"));
+        WorkingContext.getChildren().add(parent);
     }
 
     public void logOutMouseClickOnAction(MouseEvent mouseEvent) throws IOException {

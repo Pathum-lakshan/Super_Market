@@ -7,14 +7,28 @@ import lk.ijse.pos.entity.Order;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 
 
 public class OrderDAOImpl implements OrderDao {
     @Override
     public ArrayList<Order> getAll() throws SQLException, ClassNotFoundException {
-        return null;
+        ArrayList<Order> all = new ArrayList<>();
+        ResultSet rst = SQLUtil.executeQuery("SELECT * FROM Orders");
+
+        while (rst.next()){
+
+
+
+            all.add(new Order(rst.getString(1), Instant.ofEpochMilli(rst.getDate(2).getTime())
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate(),rst.getString(3),rst.getDouble(4)));
+        }
+
+        return all;
     }
 
     @Override
