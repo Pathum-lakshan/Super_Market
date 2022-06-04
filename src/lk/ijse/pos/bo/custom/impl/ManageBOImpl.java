@@ -45,6 +45,7 @@ public class ManageBOImpl implements ManageBO {
 
         return allCustomer;
     }
+
     public ArrayList<OrderDetailDTO> loadAllOrderDetails() throws SQLException, ClassNotFoundException {
 
         ArrayList<OrderDetails> all = orderDetailsDAO.getAll();
@@ -86,7 +87,11 @@ public class ManageBOImpl implements ManageBO {
     public boolean deleteOrderDetail(String id) throws SQLException, ClassNotFoundException {
         return orderDetailsDAO.delete(id);
     }
+    public boolean updateItems(ItemDTO itemDTO) throws SQLException, ClassNotFoundException {
 
+         return itemDAO.updateItem(new Item(itemDTO.getCode(),itemDTO.getQtyOnHand()));
+
+    }
     @Override
     public boolean deleteOrder(String id) throws SQLException, ClassNotFoundException {
         return orderDAO.delete(id);

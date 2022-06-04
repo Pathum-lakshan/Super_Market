@@ -35,6 +35,11 @@ public class Item {
         this.setUnitPrice(unitPrice);
     }
 
+    public Item(String code, int qtyOnHand) {
+        this.code = code;
+        this.qtyOnHand = qtyOnHand;
+    }
+
     public String getName() {
         return name;
     }

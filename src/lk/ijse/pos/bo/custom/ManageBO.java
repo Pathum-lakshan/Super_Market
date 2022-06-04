@@ -36,4 +36,5 @@ public interface ManageBO extends SuperBO {
     boolean UpdateOrder(OrderDTO orderDTO) throws SQLException, ClassNotFoundException;
     boolean UpdateOrderDetail(OrderDetailDTO orderDetailDTO) throws SQLException, ClassNotFoundException;
     ItemDTO searchItem(String code) throws SQLException, ClassNotFoundException;
+    boolean updateItems(ItemDTO itemDTO) throws SQLException, ClassNotFoundException;
 }

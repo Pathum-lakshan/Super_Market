@@ -31,10 +31,17 @@ public class ItemDAOImpl implements ItemDAO {
         return SQLUtil.executeUpdate("UPDATE Item SET ItemName=?, description=?, unitPrice=?, qty=? WHERE itemCode=?", entity.getName(),entity.getDescription(), entity.getUnitPrice(), entity.getQtyOnHand(), entity.getCode());
     }
 
+    public boolean updateItem(Item entity) throws SQLException, ClassNotFoundException {
+        return SQLUtil.executeUpdate("UPDATE Item SET qty=? WHERE itemCode=?", entity.getQtyOnHand(), entity.getCode());
+    }
+
     @Override
     public Item search(String s) throws SQLException, ClassNotFoundException {
         ResultSet rst = SQLUtil.executeQuery("SELECT * FROM Item WHERE ItemCode=?", s);
         if (rst.next()) {
+
+
+
             return new Item(rst.getString(1), rst.getString(2), rst.getString(3), rst.getBigDecimal(4),rst.getInt(5));
         }
         return null;

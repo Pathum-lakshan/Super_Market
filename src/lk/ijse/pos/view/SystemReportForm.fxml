@@ -8,14 +8,6 @@
 
 <AnchorPane fx:id="WorkingContex" prefHeight="1030.0" prefWidth="1920.0" stylesheets="@asserts/styles/Table.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.pos.controller.SystemReportFormController">
     <children>
-        <LineChart fx:id="chartExpense" layoutX="14.0" layoutY="556.0" opacity="0.68" prefHeight="464.0" prefWidth="1893.0">
-            <xAxis>
-                <CategoryAxis side="BOTTOM" />
-            </xAxis>
-            <yAxis>
-                <NumberAxis side="LEFT" />
-            </yAxis>
-        </LineChart>
       <LineChart fx:id="chartMonthly" layoutX="467.0" layoutY="27.0" opacity="0.68" prefHeight="464.0" prefWidth="1013.0">
          <xAxis>
             <CategoryAxis side="BOTTOM" />
@@ -33,6 +25,14 @@
          </yAxis>
       </LineChart>
       <BarChart fx:id="barchartAnnual" layoutX="42.0" layoutY="27.0" prefHeight="464.0" prefWidth="405.0">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+      </BarChart>
+      <BarChart fx:id="chartItemUsage" layoutX="64.0" layoutY="500.0" prefHeight="516.0" prefWidth="1831.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>

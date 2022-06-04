@@ -98,6 +98,7 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
 
     public ItemDTO searchItem(String code) throws SQLException, ClassNotFoundException {
         Item search = itemDAO.search(code);
+
         return new ItemDTO(search.getCode(),search.getName(),search.getDescription(),search.getUnitPrice(),search.getQtyOnHand());
     }
 
@@ -138,7 +139,7 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
 
         for (Item item:all
              ) {
-            allItem.add(new ItemDTO(item.getCode(),item.getDescription(),item.getUnitPrice(), item.getQtyOnHand()));
+            allItem.add(new ItemDTO(item.getCode(),item.getName(),item.getDescription(),item.getUnitPrice(), item.getQtyOnHand()));
         }
 
         return allItem;

@@ -14,7 +14,9 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.pos.bo.BOFactory;
 import lk.ijse.pos.bo.custom.SystemReportBO;
+import lk.ijse.pos.dto.ItemDTO;
 import lk.ijse.pos.dto.OrderDTO;
+import lk.ijse.pos.dto.OrderDetailDTO;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -24,13 +26,15 @@ import java.util.ArrayList;
 
 public class SystemReportFormController {
     public AnchorPane WorkingContex;
-    public LineChart chartExpense;
+
 
     private final SystemReportBO systemReport =(SystemReportBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.SYSTEMREPORT);
 
     public LineChart chartMonthly;
     public LineChart chartDaily;
     public BarChart barchartAnnual;
+    public BarChart chartItemUsage;
+
 
     public void initialize() throws SQLException, ClassNotFoundException {
         loadAll();
@@ -44,7 +48,30 @@ public class SystemReportFormController {
 
     }
 
-    private void loadItemReport() {
+    private void loadItemReport() throws SQLException, ClassNotFoundException {
+        ArrayList<ItemDTO> itemDTOS = systemReport.loadAllItemCodes();
+        ArrayList<OrderDetailDTO> orderDetailDTOS = systemReport.loadAllOrderDetails();
+        XYChart.Series ItemReport = new XYChart.Series();
+
+        int using=0;
+
+        for (ItemDTO itemDTO :itemDTOS
+                ) {
+            for (OrderDetailDTO orderDetail: orderDetailDTOS
+                 ) {
+                if (itemDTO.getCode().equals(orderDetail.getItemCode())){
+                    using=using+1;
+
+
+                }
+            }
+            ItemReport.getData().add(new XYChart.Data<>(itemDTO.getCode(),using));
+            using=0;
+        }
+
+        ItemReport.setName("Item Usage Report");
+
+        chartItemUsage.getData().add(ItemReport);
 
     }
 

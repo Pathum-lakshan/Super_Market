@@ -382,6 +382,8 @@ if (newValue1!=null){checkText(txtCustomerName,newValue1.getName());}
 
         if (btnModifyOrder.getText().equals("Delete Order")){
             if ( manageBO.deleteOrderDetail(txtOrderID.getText())){
+
+
                 Util.notifications("Order Detail Deleted SuccessFull","DELETED");
                 if ( manageBO.deleteOrder(txtOrderID.getText())){
                     Util.notifications("Order Deleted SuccessFull","DELETED");
@@ -405,6 +407,19 @@ if (newValue1!=null){checkText(txtCustomerName,newValue1.getName());}
 
             if ( manageBO.UpdateOrderDetail(new OrderDetailDTO(txtOrderID.getText(),(String) cmbItemCode.getValue(),BigDecimal.valueOf(Double.parseDouble(txtUnitPrice.getText())),Integer.parseInt(txtQtyOnHands.getText())))){
                 Util.notifications("Order Detail Updated SuccessFull","UPDATED");
+
+               int txtQtyOnHandsText = Integer.parseInt(txtQtyOnHands.getText());
+
+               int stilQty = newValue2.getQty();
+
+                ItemDTO itemDTO = manageBO.searchItem((String) cmbItemCode.getValue());
+
+                int itemQty = itemDTO.getQtyOnHand();
+/*              if (stilQty<txtQtyOnHandsText){
+                    manageBO.updateItems(new ItemDTO((String) cmbItemCode.getValue(),));
+                }else {
+                    manageBO.updateItems(new ItemDTO((String) cmbItemCode.getValue(),));
+                }*/
 
                 if ( manageBO.UpdateOrder(new OrderDTO(txtOrderID.getId(),Double.parseDouble(txtTotal.getText())))){
                     Util.notifications("Order Updated SuccessFull","UPDATED");
