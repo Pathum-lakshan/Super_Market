@@ -27,24 +27,24 @@ public class ManageItemsBOImpl implements ManageItemBO {
 
         for (Item item:all
              ) {
-            allCustomer.add(new ItemDTO(item.getCode(),item.getDescription(),item.getUnitPrice(),item.getQtyOnHand()));
+            allCustomer.add(new ItemDTO(item.getCode(),item.getName(),item.getDescription(),item.getUnitPrice(),item.getQtyOnHand()));
         }
 
         return allCustomer;
     }
 
-    public void deleteItems(String code) throws SQLException, ClassNotFoundException {
-        itemDAO.delete(code);
+    public boolean deleteItems(String code) throws SQLException, ClassNotFoundException {
+       return itemDAO.delete(code);
     }
 
-    public void saveItems(ItemDTO itemDTO) throws SQLException, ClassNotFoundException {
-        itemDAO.save(new Item(itemDTO.getCode(),itemDTO.getDescription() , itemDTO.getQtyOnHand(), itemDTO.getUnitPrice()));
+    public boolean saveItems(ItemDTO itemDTO) throws SQLException, ClassNotFoundException {
+       return itemDAO.save(new Item(itemDTO.getCode(),itemDTO.getItemName(),itemDTO.getDescription(), itemDTO.getUnitPrice() , itemDTO.getQtyOnHand()));
     }
 
 
 
-    public void updateItems(ItemDTO itemDTO) throws SQLException, ClassNotFoundException {
-        itemDAO.update(new Item(itemDTO.getCode(),itemDTO.getDescription() , itemDTO.getQtyOnHand(), itemDTO.getUnitPrice()));
+    public boolean updateItems(ItemDTO itemDTO) throws SQLException, ClassNotFoundException {
+       return itemDAO.update(new Item(itemDTO.getCode(),itemDTO.getItemName(),itemDTO.getDescription(), itemDTO.getUnitPrice() , itemDTO.getQtyOnHand()));
     }
 
     public boolean existItem(String code) throws SQLException, ClassNotFoundException {

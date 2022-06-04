@@ -16,18 +16,19 @@ public class ItemDAOImpl implements ItemDAO {
         ArrayList<Item> allItems = new ArrayList<>();
         while (rst.next()) {
             allItems.add(new Item(rst.getString(1), rst.getString(2), rst.getString(3), rst.getBigDecimal(4),rst.getInt(5)));
+
         }
         return allItems;
     }
 
     @Override
     public boolean save(Item entity) throws SQLException, ClassNotFoundException {
-        return SQLUtil.executeUpdate("INSERT INTO Item (code, description, unitPrice, qtyOnHand) VALUES (?,?,?,?)", entity.getCode(), entity.getDescription(), entity.getUnitPrice(), entity.getQtyOnHand());
+        return SQLUtil.executeUpdate("INSERT INTO Item (ItemCode,ItemName, description, unitPrice, qty) VALUES (?,?,?,?,?)", entity.getCode(),entity.getName(), entity.getDescription(), entity.getUnitPrice(), entity.getQtyOnHand());
     }
 
     @Override
     public boolean update(Item entity) throws SQLException, ClassNotFoundException {
-        return SQLUtil.executeUpdate("UPDATE Item SET description=?, unitPrice=?, qty=? WHERE itemCode=?", entity.getDescription(), entity.getUnitPrice(), entity.getQtyOnHand(), entity.getCode());
+        return SQLUtil.executeUpdate("UPDATE Item SET ItemName=?, description=?, unitPrice=?, qty=? WHERE itemCode=?", entity.getName(),entity.getDescription(), entity.getUnitPrice(), entity.getQtyOnHand(), entity.getCode());
     }
 
     @Override
@@ -46,7 +47,7 @@ public class ItemDAOImpl implements ItemDAO {
 
     @Override
     public boolean delete(String s) throws SQLException, ClassNotFoundException {
-        return SQLUtil.executeUpdate("DELETE FROM Item WHERE code=?", s);
+        return SQLUtil.executeUpdate("DELETE FROM Item WHERE ItemCode=?", s);
     }
 
     @Override
@@ -63,7 +64,7 @@ public class ItemDAOImpl implements ItemDAO {
         String table ="Item";
         String incrementID=null;
 
-        ResultSet maxId = SQLUtil.execute("SELECT CONCAT(MAX(0+SUBSTRING(code,3))) FROM Item");
+        ResultSet maxId = SQLUtil.execute("SELECT CONCAT(MAX(0+SUBSTRING(ItemCode,3))) FROM Item");
 
         String id=null;
 

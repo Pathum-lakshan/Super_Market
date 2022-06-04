@@ -7,17 +7,18 @@ import java.math.BigDecimal;
 
 public class ItemDTO implements Serializable {
     private String code;
+
+    private String ItemName;
     private String description;
     private BigDecimal unitPrice;
     private int qtyOnHand;
-    private String ItemName;
 
-    public ItemDTO(String code, String description, BigDecimal unitPrice, int qtyOnHand, String itemName) {
+    public ItemDTO(String code, String itemName, String description, BigDecimal unitPrice, int qtyOnHand) {
         this.code = code;
+        ItemName = itemName;
         this.description = description;
         this.unitPrice = unitPrice;
         this.qtyOnHand = qtyOnHand;
-        ItemName = itemName;
     }
 
     public ItemDTO(String code, int qty) {

@@ -77,7 +77,7 @@ public class ManageBOImpl implements ManageBO {
 
         for (Item item:all
              ) {
-            allItem.add(new ItemDTO(item.getCode(),item.getDescription(),item.getUnitPrice(),item.getQtyOnHand(),item.getName()));
+            allItem.add(new ItemDTO(item.getCode(),item.getName(),item.getDescription(),item.getUnitPrice(),item.getQtyOnHand()));
         }
         return allItem;
     }
@@ -101,7 +101,7 @@ public class ManageBOImpl implements ManageBO {
 
     public ItemDTO searchItem(String code) throws SQLException, ClassNotFoundException {
         Item search = itemDAO.search(code);
-        return new ItemDTO(search.getCode(),search.getDescription(),search.getUnitPrice(),search.getQtyOnHand(),search.getName());
+        return new ItemDTO(search.getCode(),search.getName(),search.getDescription(),search.getUnitPrice(),search.getQtyOnHand());
     }
 
     public boolean saveCustomer(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {

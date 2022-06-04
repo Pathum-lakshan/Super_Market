@@ -16,9 +16,9 @@ import java.util.ArrayList;
 
 public interface ManageItemBO extends SuperBO {
     ArrayList<ItemDTO> loadAllItems() throws SQLException, ClassNotFoundException;
-    void deleteItems(String code) throws SQLException, ClassNotFoundException;
-    void saveItems(ItemDTO itemDTO) throws SQLException, ClassNotFoundException;
-    void updateItems(ItemDTO itemDTO) throws SQLException, ClassNotFoundException;
+    boolean deleteItems(String code) throws SQLException, ClassNotFoundException;
+    boolean saveItems(ItemDTO itemDTO) throws SQLException, ClassNotFoundException;
+    boolean updateItems(ItemDTO itemDTO) throws SQLException, ClassNotFoundException;
     boolean existItem(String code) throws SQLException, ClassNotFoundException;
     String generateNewId() throws SQLException, ClassNotFoundException;
 }
