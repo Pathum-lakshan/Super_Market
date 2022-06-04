@@ -12,6 +12,7 @@ package lk.ijse.pos.bo;
 import lk.ijse.pos.bo.custom.impl.ManageBOImpl;
 import lk.ijse.pos.bo.custom.impl.ManageItemsBOImpl;
 import lk.ijse.pos.bo.custom.impl.PlaceOrderBOImpl;
+import lk.ijse.pos.bo.custom.impl.SystemReportBOImpl;
 
 
 public class BOFactory {
@@ -27,7 +28,7 @@ public class BOFactory {
     }
 
     public enum BOTypes {
-        MANAGECUSTOMER,MANAGEITEM,PLACEORDER
+        MANAGECUSTOMER,MANAGEITEM,PLACEORDER,SYSTEMREPORT
     }
 
 
@@ -40,6 +41,8 @@ public class BOFactory {
                 return new ManageItemsBOImpl();
             case PLACEORDER:
                 return  new PlaceOrderBOImpl();
+            case SYSTEMREPORT:
+                return  new SystemReportBOImpl();
             default:
                 return null;
         }

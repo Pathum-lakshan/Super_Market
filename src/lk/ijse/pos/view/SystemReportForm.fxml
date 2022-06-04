@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="WorkingContex" prefHeight="1030.0" prefWidth="1529.0" stylesheets="@asserts/styles/Table.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.pos.controller.SystemReportFormController">
+    <children>
+        <LineChart fx:id="chartIncome" layoutX="14.0" layoutY="28.0" opacity="0.68" prefHeight="464.0" prefWidth="1502.0">
+            <xAxis>
+                <CategoryAxis side="BOTTOM" />
+            </xAxis>
+            <yAxis>
+                <NumberAxis side="LEFT" />
+            </yAxis>
+        </LineChart>
+        <LineChart fx:id="chartExpense" layoutX="14.0" layoutY="556.0" opacity="0.68" prefHeight="464.0" prefWidth="1502.0">
+            <xAxis>
+                <CategoryAxis side="BOTTOM" />
+            </xAxis>
+            <yAxis>
+                <NumberAxis side="LEFT" />
+            </yAxis>
+        </LineChart>
+    </children>
+</AnchorPane>
