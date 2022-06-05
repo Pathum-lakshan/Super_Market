@@ -33,7 +33,8 @@ public class SystemReportFormController {
     public LineChart chartMonthly;
     public LineChart chartDaily;
     public BarChart barchartAnnual;
-    public BarChart chartItemUsage;
+
+    public LineChart lineChartItemUsage;
 
 
     public void initialize() throws SQLException, ClassNotFoundException {
@@ -71,7 +72,7 @@ public class SystemReportFormController {
 
         ItemReport.setName("Item Usage Report");
 
-        chartItemUsage.getData().add(ItemReport);
+        lineChartItemUsage.getData().add(ItemReport);
 
     }
 

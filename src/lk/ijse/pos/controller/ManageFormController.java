@@ -31,6 +31,9 @@ import lk.ijse.pos.view.util.Util;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class ManageFormController {
     public JFXTextField txtCustomerName;
@@ -60,7 +63,7 @@ public class ManageFormController {
     public JFXComboBox cmbItemCode;
     public JFXTextField txtQtyOnHands;
     private CustomerDTO newValue1;
-    private OrderDetailDTO newValue2;
+    private OrderDetailDTO orderDetailDTONewValue;
     private final ManageBO manageBO = (ManageBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.MANAGECUSTOMER);
 
     public JFXTextField txtCustomerID;
@@ -89,17 +92,27 @@ public class ManageFormController {
         });
 
         txtTotal.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.equals(newValue2.getTotal()+"")){
 
-                btnModifyOrder.setText("Delete Order");
-            }else if (txtTotal.getText().equals("000.00")){
-                btnModifyOrder.setText("Delete Order");
+
+            if (orderDetailDTONewValue!=null){
+                if (newValue.equals(orderDetailDTONewValue.getTotal() + "")){
+
+                    btnModifyOrder.setText("Delete Order");
+                }else if (newValue.equals("000.00")){
+                    btnModifyOrder.setText("Delete Order");
+                }
+                else {
+                    btnModifyOrder.setText("Modify Order");
+
+                }
+
             }
-            else {
-                btnModifyOrder.setText("Modify Order");
 
-            }
 
+
+        });
+
+        txtQtyOnHands.textProperty().addListener((observable, oldValue, newValue) -> {
 
         });
 
@@ -136,7 +149,7 @@ public class ManageFormController {
         });
 
         tblOrder.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-             newValue2 = newValue;
+             orderDetailDTONewValue = newValue;
 
 
             btnModifyOrder.setText(newValue != null ? "Delete Order" : "Modify Order");
@@ -154,7 +167,7 @@ public class ManageFormController {
 
         cmbItemCode.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue!=null){
-                if (newValue.equals(newValue2.getItemCode())){
+                if (newValue.equals(orderDetailDTONewValue.getItemCode())){
                     btnModifyOrder.setText("Delete Order");
                 }else {
                     btnModifyOrder.setText("Modify Order");
@@ -247,7 +260,7 @@ public class ManageFormController {
 
                 double total = unitPrice*qty;
 
-                tblOrder.getItems().add(new OrderDetailDTO(orderDetailDTO.getOid(),orderDetailDTO.getItemCode(),orderDetailDTO.getUnitPrice(),orderDetailDTO.getQty(),total));
+                tblOrder.getItems().add(new OrderDetailDTO(orderDetailDTO.getOid(),orderDetailDTO.getItemCode(),orderDetailDTO.getQty(),orderDetailDTO.getUnitPrice(),total));
 
 
             }
@@ -381,14 +394,45 @@ if (newValue1!=null){checkText(txtCustomerName,newValue1.getName());}
     public void modifyOrderOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 
         if (btnModifyOrder.getText().equals("Delete Order")){
-            if ( manageBO.deleteOrderDetail(txtOrderID.getText())){
+            if ( manageBO.deleteOrderDetail(new OrderDetailDTO(txtOrderID.getText(),(String) cmbItemCode.getValue()))){
 
+                ItemDTO itemDTO = manageBO.searchItems((String) cmbItemCode.getValue());
+
+                int itemQty = itemDTO.getQtyOnHand();
+                int qtyInNow = Integer.parseInt(String.valueOf(orderDetailDTONewValue.getUnitPrice()));
+                int ndUpdateQty = itemDTO.getQtyOnHand()+qtyInNow;
+
+                manageBO.updateItems(new ItemDTO(orderDetailDTONewValue.getItemCode(),ndUpdateQty));
+
+
+                loadAllOrder();
 
                 Util.notifications("Order Detail Deleted SuccessFull","DELETED");
-                if ( manageBO.deleteOrder(txtOrderID.getText())){
-                    Util.notifications("Order Deleted SuccessFull","DELETED");
+
+                List<OrderDTO> collect = tblOrder.getItems().stream().map(tm -> new OrderDTO(
+                        tm.getOid(), tm.getTotal()
+                )).collect(Collectors.toList());
+
+                double total=0;
+
+                for (OrderDTO order: collect
+                ) {
+
+                    if (txtOrderID.getText().equals(order.getOrderId())){
+                        total=total+order.getTotal();
+                    }
+
+
+
+
                 }
 
+
+                if (total == 0){
+                    if ( manageBO.deleteOrder(txtOrderID.getText())){
+                        Util.notifications("Order Deleted SuccessFull","DELETED");
+                    }
+                }
 
 
                 txtTotal.clear();
@@ -398,45 +442,111 @@ if (newValue1!=null){checkText(txtCustomerName,newValue1.getName());}
                 cmbItemCode.setValue(null);
                 txtQtyOnHands.setDisable(true);
 
-                loadAllOrder();
+
             }
 
         }
         else {
 
 
-            if ( manageBO.UpdateOrderDetail(new OrderDetailDTO(txtOrderID.getText(),(String) cmbItemCode.getValue(),BigDecimal.valueOf(Double.parseDouble(txtUnitPrice.getText())),Integer.parseInt(txtQtyOnHands.getText())))){
+            if ( manageBO.UpdateOrderDetail(new OrderDetailDTO(
+                    txtOrderID.getText(),(String) cmbItemCode.getValue(),BigDecimal.valueOf(Double.parseDouble(txtUnitPrice.getText())),
+                    Integer.parseInt(txtQtyOnHands.getText())), orderDetailDTONewValue.getItemCode())){
                 Util.notifications("Order Detail Updated SuccessFull","UPDATED");
 
-               int txtQtyOnHandsText = Integer.parseInt(txtQtyOnHands.getText());
-
-               int stilQty = newValue2.getQty();
-
-                ItemDTO itemDTO = manageBO.searchItem((String) cmbItemCode.getValue());
+                ItemDTO itemDTO = manageBO.searchItems((String) cmbItemCode.getValue());
 
                 int itemQty = itemDTO.getQtyOnHand();
-/*              if (stilQty<txtQtyOnHandsText){
-                    manageBO.updateItems(new ItemDTO((String) cmbItemCode.getValue(),));
-                }else {
-                    manageBO.updateItems(new ItemDTO((String) cmbItemCode.getValue(),));
-                }*/
 
-                if ( manageBO.UpdateOrder(new OrderDTO(txtOrderID.getId(),Double.parseDouble(txtTotal.getText())))){
-                    Util.notifications("Order Updated SuccessFull","UPDATED");
+                if (cmbItemCode.getValue().equals(orderDetailDTONewValue.getItemCode())){
+
+                    int modifiedQty = Integer.parseInt(txtQtyOnHands.getText());
+                    int qtyInNow = Integer.parseInt(String.valueOf(orderDetailDTONewValue.getUnitPrice()));
+
+
+
+
+                    if (qtyInNow<modifiedQty){
+
+                        int updatedQty = itemQty-(modifiedQty-qtyInNow);
+
+                        manageBO.updateItems(new ItemDTO((String) cmbItemCode.getValue(),updatedQty));
+
+
+
+                    }else if (qtyInNow>modifiedQty){
+
+                        int updatedQty = itemQty+(qtyInNow-modifiedQty);
+
+                        manageBO.updateItems(new ItemDTO((String) cmbItemCode.getValue(),updatedQty));
+
+                    }
+                }else {
+
+                    int modifiedQty = Integer.parseInt(txtQtyOnHands.getText());
+                    int qtyInNow = Integer.parseInt(String.valueOf(orderDetailDTONewValue.getUnitPrice()));
+
+                    int updatedQty = itemQty-modifiedQty;
+
+
+
+                    manageBO.updateItems(new ItemDTO((String) cmbItemCode.getValue(),updatedQty));
+
+                    ItemDTO itemDTOin = manageBO.searchItems(orderDetailDTONewValue.getItemCode());
+
+                    int ndUpdateQty = itemDTOin.getQtyOnHand()+qtyInNow;
+
+                    manageBO.updateItems(new ItemDTO(orderDetailDTONewValue.getItemCode(),ndUpdateQty));
+
                 }
 
 
 
-                txtTotal.clear();
-                txtQtyOnHands.clear();
-                txtOrderID.clear();
-                txtUnitPrice.clear();
-                cmbItemCode.setValue(null);
-                txtQtyOnHands.setDisable(true);
+
+
 
                 loadAllOrder();
             }
+            List<OrderDTO> collect = tblOrder.getItems().stream().map(tm -> new OrderDTO(
+                   tm.getOid(), tm.getTotal()
+            )).collect(Collectors.toList());
 
+            double total=0;
+
+            for (OrderDTO order: collect
+            ) {
+
+                if (txtOrderID.getText().equals(order.getOrderId())){
+                    total=total+order.getTotal();
+                }
+
+
+
+
+            }
+
+
+            if (total == 0){
+                if ( manageBO.deleteOrder(txtOrderID.getText())){
+                    Util.notifications("Order Deleted SuccessFull","DELETED");
+                }
+            }
+
+            if ( manageBO.UpdateOrder(new OrderDTO(txtOrderID.getText(),total))){
+                Util.notifications("Order Updated SuccessFull","UPDATED");
+
+
+
+            }
+
+
+
+            txtOrderID.clear();
+            txtTotal.clear();
+            txtQtyOnHands.clear();
+            txtUnitPrice.clear();
+            cmbItemCode.setValue(null);
+            txtQtyOnHands.setDisable(true);
 
         }
 

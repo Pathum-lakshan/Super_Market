@@ -52,8 +52,8 @@
          <columns>
             <TableColumn fx:id="colOrderID" prefWidth="152.0" text="Order Id" />
             <TableColumn fx:id="colItemCode" prefWidth="187.0" text="Item Code" />
-            <TableColumn fx:id="colOrderQtyOnHand" prefWidth="154.0" text="Qty On Hand" />
-            <TableColumn fx:id="colOrderUnitPrice" prefWidth="192.0" text="Unit Price" />
+            <TableColumn fx:id="colOrderQtyOnHand" prefWidth="154.0" text="Unit Price" />
+            <TableColumn fx:id="colOrderUnitPrice" prefWidth="192.0" text="Qty On Hand" />
             <TableColumn fx:id="colTotal" prefWidth="210.0" text="Total" />
          </columns>
       </TableView>

@@ -46,6 +46,17 @@ public class ManageBOImpl implements ManageBO {
         return allCustomer;
     }
 
+    public ItemDTO searchItems(String itemCode) throws SQLException, ClassNotFoundException {
+        Item item = itemDAO.search(itemCode);
+
+
+
+
+        return new ItemDTO(item.getCode(),item.getName(),item.getDescription(),item.getUnitPrice(),item.getQtyOnHand());
+
+    }
+
+
     public ArrayList<OrderDetailDTO> loadAllOrderDetails() throws SQLException, ClassNotFoundException {
 
         ArrayList<OrderDetails> all = orderDetailsDAO.getAll();
@@ -84,8 +95,8 @@ public class ManageBOImpl implements ManageBO {
     }
 
     @Override
-    public boolean deleteOrderDetail(String id) throws SQLException, ClassNotFoundException {
-        return orderDetailsDAO.delete(id);
+    public boolean deleteOrderDetail(OrderDetailDTO orderDetailDTO) throws SQLException, ClassNotFoundException {
+        return orderDetailsDAO.deleteItem(new OrderDetails(orderDetailDTO.getOid(),orderDetailDTO.getItemCode()));
     }
     public boolean updateItems(ItemDTO itemDTO) throws SQLException, ClassNotFoundException {
 
@@ -100,8 +111,8 @@ public class ManageBOImpl implements ManageBO {
         return orderDAO.update(new Order(orderDTO.getOrderId(),orderDTO.getTotal()));
     }
 
-    public boolean UpdateOrderDetail(OrderDetailDTO orderDetailDTO) throws SQLException, ClassNotFoundException {
-        return orderDetailsDAO.update(new OrderDetails(orderDetailDTO.getOid(),orderDetailDTO.getItemCode(),orderDetailDTO.getQty(),orderDetailDTO.getUnitPrice()));
+    public boolean UpdateOrderDetail(OrderDetailDTO orderDetailDTO,String itemCode) throws SQLException, ClassNotFoundException {
+        return orderDetailsDAO.updateDetail(new OrderDetails(orderDetailDTO.getOid(),orderDetailDTO.getItemCode(),orderDetailDTO.getQty(),orderDetailDTO.getUnitPrice()),itemCode);
     }
 
     public ItemDTO searchItem(String code) throws SQLException, ClassNotFoundException {

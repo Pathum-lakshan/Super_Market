@@ -26,8 +26,13 @@ public class OrderDetailsDAOImpl implements OrderDetailsDAO {
     }
 
     @Override
-    public boolean update(OrderDetails entity) throws SQLException, ClassNotFoundException {
-        return SQLUtil.executeUpdate("UPDATE OrderDetail SET ItemCode=?, unitPrice=?, OrderQty=? WHERE orderId=? AND ItemCode=? ", entity.getItemCode(), entity.getUnitPrice(), entity.getQty(), entity.getOid(),entity.getItemCode());
+    public boolean update(OrderDetails dto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean updateDetail(OrderDetails entity,String itemCode) throws SQLException, ClassNotFoundException {
+        return SQLUtil.executeUpdate("UPDATE OrderDetail SET ItemCode=?, unitPrice=?, OrderQty=? WHERE orderId=? AND ItemCode=? ", entity.getItemCode(), entity.getUnitPrice(), entity.getQty(), entity.getOid(),itemCode);
 
     }
 
@@ -43,7 +48,12 @@ public class OrderDetailsDAOImpl implements OrderDetailsDAO {
 
     @Override
     public boolean delete(String s) throws SQLException, ClassNotFoundException {
-        return SQLUtil.executeUpdate("DELETE FROM OrderDetail WHERE OrderId=?", s);
+        return false;
+    }
+
+    @Override
+    public boolean deleteItem(OrderDetails orderDetails) throws SQLException, ClassNotFoundException {
+        return SQLUtil.executeUpdate("DELETE FROM OrderDetail WHERE OrderId=? and itemCode =?", orderDetails.getOid(),orderDetails.getItemCode());
     }
 
     @Override

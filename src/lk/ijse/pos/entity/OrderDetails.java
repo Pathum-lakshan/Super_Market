@@ -26,8 +26,10 @@ public class OrderDetails {
         this.unitPrice = unitPrice;
     }
 
-
-
+    public OrderDetails(String oid, String itemCode) {
+        this.oid = oid;
+        this.itemCode = itemCode;
+    }
 
 
     public String getOid() {

@@ -19,6 +19,10 @@ public class OrderDTO  {
         this.total = total;
     }
 
+    public OrderDTO(double total) {
+        this.total = total;
+    }
+
     public OrderDTO(String orderId, LocalDate orderDate, String cusID, double total) {
         this.orderId = orderId;
         this.orderDate = orderDate;

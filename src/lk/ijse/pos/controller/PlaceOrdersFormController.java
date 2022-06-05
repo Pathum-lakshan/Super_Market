@@ -317,8 +317,8 @@ public class PlaceOrdersFormController {
 
 
 
-            boolean b =  saveOrder(orderId,LocalDate.now(),cusID,Double.parseDouble(String.valueOf(lblTotal.getText())), tblOrder.getItems().stream().map(tm -> new OrderDetailDTO(orderId,
-                    tm.getItemCode() ,BigDecimal.valueOf(Double.parseDouble(tm.getUnitPrice())),Integer.parseInt(tm.getQtyOnHand()) )).collect(Collectors.toList()));
+            boolean b =  saveOrder(orderId,LocalDate.now(),cusID,Double.parseDouble(String.valueOf(lblTotal.getText())), tblOrder.getItems().stream().map(tm -> new OrderDetailDTO(
+                    orderId, tm.getItemCode(), tm.getItemName(),BigDecimal.valueOf(Double.parseDouble(tm.getUnitPrice())),Integer.parseInt(tm.getQtyOnHand()),Double.parseDouble(tm.getTotal()))).collect(Collectors.toList()));
 
 
 

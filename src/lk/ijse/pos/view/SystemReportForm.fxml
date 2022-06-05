@@ -32,13 +32,13 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </BarChart>
-      <BarChart fx:id="chartItemUsage" layoutX="64.0" layoutY="500.0" prefHeight="516.0" prefWidth="1831.0">
+      <LineChart fx:id="lineChartItemUsage" layoutX="40.0" layoutY="522.0" prefHeight="499.0" prefWidth="1852.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
         <yAxis>
           <NumberAxis side="LEFT" />
         </yAxis>
-      </BarChart>
+      </LineChart>
     </children>
 </AnchorPane>

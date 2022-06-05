@@ -8,12 +8,43 @@ public class OrderDetailDTO implements Serializable {
 
     private String oid;
     private String itemCode;
+    private String itemName;
 
     private BigDecimal unitPrice;
     private int qty;
     private double total;
 
+    public OrderDetailDTO(String oid, String itemCode, int qty, BigDecimal unitPrice, double total) {
+        this.oid = oid;
+        this.itemCode = itemCode;
+        this.unitPrice = unitPrice;
+        this.qty = qty;
+        this.total = total;
+    }
+
+    public OrderDetailDTO(String oid, String itemCode) {
+        this.oid = oid;
+        this.itemCode = itemCode;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
     public OrderDetailDTO() {
+    }
+
+    public OrderDetailDTO(String oid, String itemCode, String itemName, BigDecimal unitPrice, int qty, double total) {
+        this.oid = oid;
+        this.itemCode = itemCode;
+        this.itemName = itemName;
+        this.unitPrice = unitPrice;
+        this.qty = qty;
+        this.total = total;
     }
 
     public OrderDetailDTO(String itemCode, int qty, BigDecimal unitPrice) {
@@ -79,12 +110,13 @@ public class OrderDetailDTO implements Serializable {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("OrderDetailDTO{");
-        sb.append("oid='").append(oid).append('\'');
-        sb.append(", itemCode='").append(itemCode).append('\'');
-        sb.append(", qty=").append(qty);
-        sb.append(", unitPrice=").append(unitPrice);
-        sb.append('}');
-        return sb.toString();
+        return "OrderDetailDTO{" +
+                "oid='" + oid + '\'' +
+                ", itemCode='" + itemCode + '\'' +
+                ", itemName='" + itemName + '\'' +
+                ", unitPrice=" + unitPrice +
+                ", qty=" + qty +
+                ", total=" + total +
+                '}';
     }
 }

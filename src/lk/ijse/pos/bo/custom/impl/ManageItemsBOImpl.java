@@ -33,6 +33,7 @@ public class ManageItemsBOImpl implements ManageItemBO {
         return allCustomer;
     }
 
+
     public boolean deleteItems(String code) throws SQLException, ClassNotFoundException {
        return itemDAO.delete(code);
     }

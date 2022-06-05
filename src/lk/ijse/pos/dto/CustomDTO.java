@@ -25,6 +25,16 @@ public class CustomDTO {
     private String customerName;
     private BigDecimal orderTotal;
     private String itemCode;
+    private String orderItemCode;
+
+    public String getOrderItemCode() {
+        return orderItemCode;
+    }
+
+    public void setOrderItemCode(String orderItemCode) {
+        this.orderItemCode = orderItemCode;
+    }
+
     private int qty;
 
     public CustomDTO(String string, LocalDate parse, String rstString, String s, int anInt, BigDecimal bigDecimal) {
@@ -175,6 +185,7 @@ public class CustomDTO {
                 ", customerName='" + customerName + '\'' +
                 ", orderTotal=" + orderTotal +
                 ", itemCode='" + itemCode + '\'' +
+                ", orderItemCode='" + orderItemCode + '\'' +
                 ", qty=" + qty +
                 '}';
     }

@@ -30,11 +30,12 @@ public interface ManageBO extends SuperBO {
 
     ArrayList<ItemDTO> loadAllItem()throws SQLException, ClassNotFoundException;
 
-    boolean deleteOrderDetail(String id)throws SQLException, ClassNotFoundException;
+    boolean deleteOrderDetail(OrderDetailDTO orderDetailDTO)throws SQLException, ClassNotFoundException;
 
     boolean deleteOrder(String id)throws SQLException, ClassNotFoundException;
     boolean UpdateOrder(OrderDTO orderDTO) throws SQLException, ClassNotFoundException;
-    boolean UpdateOrderDetail(OrderDetailDTO orderDetailDTO) throws SQLException, ClassNotFoundException;
+    boolean UpdateOrderDetail(OrderDetailDTO orderDetailDTO,String ItemCode) throws SQLException, ClassNotFoundException;
     ItemDTO searchItem(String code) throws SQLException, ClassNotFoundException;
     boolean updateItems(ItemDTO itemDTO) throws SQLException, ClassNotFoundException;
+    ItemDTO searchItems(String itemCode) throws SQLException, ClassNotFoundException;
 }
